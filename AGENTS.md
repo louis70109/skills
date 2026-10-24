@@ -17,6 +17,9 @@ If the task adds, updates, or ships Node or Python dependencies, also apply `ski
 If the task creates or changes a backend service, also apply `skills/prometheus-guide/SKILL.md`.
 任務建立或修改後端服務時，另須套用 `skills/prometheus-guide/SKILL.md`。
 
+If the task creates or changes an error, warning, or alert message that a user sees, also apply `skills/ux-error-messages/SKILL.md`.
+任務涉及使用者看到的錯誤、警告、提醒訊息時，另須套用 `skills/ux-error-messages/SKILL.md`。
+
 Before you ship code, also complete `SECURITY-CHECKLIST.md`.
 發布程式碼前，另須完成 `SECURITY-CHECKLIST.md`。
 
