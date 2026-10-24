@@ -23,6 +23,9 @@ If the task creates or changes a logger or log output, also apply `skills/loki-l
 If the task creates or changes an error, warning, or alert message that a user sees, also apply `skills/ux-error-messages/SKILL.md`.
 任務涉及使用者看到的錯誤、警告、提醒訊息時，另須套用 `skills/ux-error-messages/SKILL.md`。
 
+If the task reviews a code change, or you finish a code change, also apply `skills/review-code/SKILL.md`.
+任務為審查程式碼變更，或完成程式碼變更前，另須套用 `skills/review-code/SKILL.md`。
+
 Before you ship code, also complete `SECURITY-CHECKLIST.md`.
 發布程式碼前，另須完成 `SECURITY-CHECKLIST.md`。
 
