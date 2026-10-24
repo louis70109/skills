@@ -26,6 +26,11 @@ After the first step, find each row that matches the task. Read and apply **ever
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
+## After context compaction 上下文壓縮後
+
+After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
+上下文被壓縮後，或新 session 開始時，必須重新讀取本表，並重讀目前任務需要的每個 skill。不可只憑 skill 的摘要工作。
+
 ## Order 順序
 
 1. Read row 0 (`ste-zh`). 讀取第 0 列。
