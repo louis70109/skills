@@ -9,6 +9,7 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 ## Workflow 流程
 
+0. **Find** the project conventions: `CONTRIBUTING.md`, `AGENTS.md`, style guide, linter and formatter config, PR template. A project rule wins over a general rule. 找出專案慣例（CONTRIBUTING、AGENTS.md、風格指南、lint/format 設定、PR 範本）；專案規則優先於通用規則。
 1. **Read** the diff and its purpose. State the purpose in one sentence. 讀 diff 與目的，以一句話重述。
 2. **Check** each area in sections 1–6. Skip an area only if it does not apply. 逐項檢查，不適用才略過。
 3. **Run** the tests, the linter, and `skills/cve-check/SKILL.md` if dependencies changed. 執行測試、lint;依賴有變時執行 cve-check。
@@ -90,8 +91,33 @@ Check against `skills/loki-logging/SKILL.md` and section B of `prometheus-guide`
 | **Minor** | Naming, small duplication, doc gap | Fix soon |
 | **Nit** | Style | Optional |
 
-For each finding write: `[Level] file:line — problem. Why. Fix.`
-每項發現格式：`[層級] 檔案:行號 — 問題。原因。建議修正。`
+### Feedback style (Conventional Comments) 回饋風格
+
+Write each comment as `<label> [decoration]: <subject>` then the reason and the fix. Use the label that fits. 每則留言格式：`<標籤> [修飾]: <主旨>`，再附理由與建議。
+
+| Label | Use | Level |
+|---|---|---|
+| `issue` | A real problem | Blocker / Major |
+| `suggestion` | A proposed change | Major / Minor |
+| `nitpick` | Style or taste | Nit (always `non-blocking`) |
+| `question` | You need info to judge | — |
+| `thought` | An idea, not a request | — |
+| `praise` | Something good. Give at least one when true. | — |
+
+Decoration: `(blocking)` must fix before merge. `(non-blocking)` can merge as is. `(if-minor)` fix only if the fix is small. 修飾：`(blocking)` 合併前必修；`(non-blocking)` 可直接合併；`(if-minor)` 修正成本小時才修。
+
+Rules 規則：
+- Comment on the code, not the person. Use "this function", not "you". 對事不對人。
+- Ask a `question` before you assume a mistake. 先提問，不預設有錯。
+- Name the project convention you use (for example "per CONTRIBUTING.md, tests live in `tests/`"). 引用專案慣例時指明出處。
+- A linter can find it? Say "fix with the linter". Do not review style by hand. 工具能抓的風格問題，請工具處理，不手動審。
+- One comment = one topic. Link repeated findings. 一則一主題，重複問題合併。
+
+Example 範例：
+`issue (blocking): Missing timeout on the payment call. A slow gateway holds the worker. Set a 5 s timeout (see section 2).`
+
+For each finding write: `[Level] file:line — problem. Why. Fix.` Put it in the comment form above.
+每項發現含 `[層級] 檔案:行號 — 問題。原因。建議修正。`，並套用上述留言格式。
 
 End with: the purpose, the areas checked, the areas skipped (with reason), the test and scan results, and the decision: **Approve**, **Approve with comments**, or **Request changes**. Any Blocker = Request changes.
 結尾列出：目的、已檢查範圍、略過範圍與原因、測試與掃描結果、結論（通過／附註通過／要求修改）。有 Blocker 一律要求修改。
