@@ -14,6 +14,9 @@ If the task adds, updates, or ships Node or Python dependencies, also apply `ski
 
 任務涉及 Node 或 Python 依賴的新增、更新、發布時，另須套用 `skills/cve-check/SKILL.md`。
 
+Before you design or write code, also apply `skills/minimal-dev/SKILL.md`. Build the smallest change that works.
+設計或撰寫程式碼前，另須套用 `skills/minimal-dev/SKILL.md`，只做最小可行的變更。
+
 If the task creates or changes a backend service, also apply `skills/prometheus-guide/SKILL.md`.
 任務建立或修改後端服務時，另須套用 `skills/prometheus-guide/SKILL.md`。
 

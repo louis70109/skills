@@ -16,6 +16,11 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 Review the change, not the author. Give a reason and a fix for each finding. 針對變更不針對人；每項發現都附理由與建議。
 
+## 0. Scope 範圍
+
+Check against `skills/minimal-dev/SKILL.md`. Sections 1–6 apply to what the change needs. Do not ask for extra features, layers, or resilience without evidence. Report over-design as a **Major** finding: an unused option, an abstraction for one use, a needless dependency, or a change outside the task.
+對照 minimal-dev。第 1–6 節只針對變更所需；無證據不要求額外功能、分層或韌性機制。過度設計列為 **Major**:未使用的選項、單一用途的抽象、不必要的依賴、任務範圍外的變更。
+
 ## 1. Usability 可用性
 
 - Does the change do what the purpose says? Does it handle the empty, null, large, and wrong input? 是否達成目的？是否處理空值、極端值、錯誤輸入？
