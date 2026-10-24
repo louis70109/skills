@@ -74,6 +74,8 @@ start_http_server(9100)
 ## B. Logs
 
 ### Format 格式
+See `skills/loki-logging/SKILL.md` for labels, fields, and the logger setup. 標籤、欄位與 logger 設定見 `skills/loki-logging/SKILL.md`。
+
 - Write one JSON object per line to stdout. 每行一個 JSON，輸出到 stdout。
 - Fields: `timestamp` (UTC, ISO 8601), `level`, `service`, `version`, `message`, `event`, `trace_id`, `request_id`, `duration_ms`, `error.type`, `error.stack`.
 - Write **detailed** logs: the operation, the inputs that are not personal (ids as opaque values, counts, sizes, status codes), the result, and the time taken. Log each dependency call and each state change.
