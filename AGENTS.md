@@ -23,6 +23,11 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 5 | You create or change a message that a user sees (error, warning, alert) 建立或修改使用者看到的錯誤、警告、提醒 | `skills/ux-error-messages/SKILL.md` |
 | 6 | You review a code change, or you finish one 審查程式碼變更，或完成程式碼變更前 | `skills/review-code/SKILL.md` |
 | 7 | You ship code 發布程式碼 | `SECURITY-CHECKLIST.md` |
+| 8 | You find where content or code lives in the RMS guide repo 在 RMS 攻略庫查內容或程式位置 | `skills/rms-find-content/SKILL.md` |
+| 9 | You add or change RMS guide content (page, static page, category, NPC map, LEECH) 新增或修改 RMS 攻略庫內容 | `skills/rms-add-content/SKILL.md` |
+| 10 | You cite or link a game ID (NPC, monster, item, map), or cross-check game data 引用、連結或交叉驗證遊戲資料 ID | `skills/rms-verify-game-data/SKILL.md` |
+| 11 | You change CSS, JS, or the Service Worker of the RMS guide site 修改 RMS 攻略庫的 CSS／JS／Service Worker | `skills/rms-frontend-pitfalls/SKILL.md` |
+| 12 | You ship the RMS guide site or its desktop app 發佈 RMS 攻略庫網站或桌面版 | `skills/rms-release/SKILL.md`, `SECURITY-CHECKLIST.md` |
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
