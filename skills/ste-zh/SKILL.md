@@ -1,44 +1,124 @@
 ---
 name: ste-zh
-description: Use before any task. Think and write in ASD-STE100 Simplified Technical English (EN) and concise Traditional Chinese (ZH). 任何工作開始前先使用：以 ASD-STE100 簡化技術英文與精簡繁體中文思考與撰寫。
+description: "Use before every task. Write concise Traditional Chinese or clear technical English. Rewrite ambiguous instructions, tool descriptions, prompts, and reports without changing meaning. 每個任務開始前使用。以精簡繁體中文或清楚技術英文撰寫。改寫含糊的指令、工具說明、提示詞與報告，保留原意。"
 ---
 
-# STE-ZH
+# STE-ZH：精簡技術中文
 
-Apply to every plan, reply, comment, commit message, and doc. 適用於所有計畫、回覆、註解、commit 訊息與文件。
+每個任務先套用本技能。
+將規則用於計畫、回覆、註解、提交訊息與文件。
+目的在於消除歧義，不是追求最少字數。
 
-## Rules 規則
+本技能取材自 ASD-STE100 的寫作原則。
+ASD-STE100 只規範英文。
+本技能的中文規則是改編，不是官方標準。
 
-| # | EN (ASD-STE100) | ZH 中文 |
+## 適用情境
+
+- 撰寫代理指令、系統提示詞或工具說明。
+- 改寫難以理解的錯誤訊息與狀態報告。
+- 撰寫 README、PR 說明或變更紀錄。
+- 為其他代理、翻譯系統或非母語讀者消除歧義。
+
+不要強制改寫以語氣與表現力為主的創作或行銷文案。
+
+## 兩種模式
+
+先依用途選擇模式。除非使用者要求，否則不報告模式。
+
+| 模式 | 用途 | 規則 |
 |---|---|---|
-| 1 | One topic per sentence. Max 20 words (procedure: 25). | 一句一事。最多 30 字。 |
-| 2 | Use active voice. Use simple present tense. | 用主動語態，避免被動與冗詞。 |
-| 3 | Use approved words only. One word = one meaning. Do not use synonyms. | 同一概念只用一個詞，全文一致。 |
-| 4 | Start a command with a verb: "Open the file." | 指令以動詞開頭：「開啟檔案。」 |
-| 5 | Use "must" for required, "can" for allowed. Do not use "should". | 「必須」表強制，「可以」表允許。 |
-| 6 | Use articles (the, a). Do not drop them. | 不省略主詞與受詞。 |
-| 7 | Use a list for steps. One action per step. | 步驟用編號清單，一步一動作。 |
-| 8 | Put the warning before the step. | 警告放在步驟之前。 |
-| 9 | No idiom, no slang, no figure of speech. | 不用成語、俚語、比喻。 |
-| 10 | Use the same noun every time. Do not use "it" if unclear. | 名詞固定；指代不明時重複名詞。 |
+| 嚴格 | 操作程序、錯誤訊息、工具說明、代理指令、安全文字 | 套用全部結構規則。同一概念固定使用同一詞。 |
+| 一般 | README、PR 說明、變更紀錄、解說 | 套用全部結構規則。詞彙以清楚自然為主。 |
 
-## Workflow 流程
+兩種模式都必須保留事實、條件與語氣強度。
+未查官方字典時，不得宣稱英文用詞符合官方詞表。
 
-1. **Restate** the task in 1–2 STE sentences. 以 1–2 句 STE 重述任務。
-2. **List** steps. One action each. 列出步驟，一步一動作。
-3. **Do** the steps. Write code, docs, and messages in STE. 執行；程式註解、文件、訊息皆用 STE。
-4. **Check** each sentence against the rules. 逐句對照規則檢查。
-5. **Report** the result: what changed, what was not done. 回報：改了什麼、未做什麼。
+## 核心規則
 
-## Output 輸出
+| 規則 | 寫法 |
+|---|---|
+| 一句一事 | 一句只寫一個重點。一個步驟只執行一個動作。 |
+| 優先使用主動語態 | 明確寫出誰執行動作。不要憑空補上執行者。 |
+| 指令以動詞開頭 | 寫「開啟檔案」，不要寫「進行檔案的開啟作業」。 |
+| 維持術語一致 | 同一概念使用同一名稱。不同概念不可混稱。 |
+| 寫清楚指代 | 「它」或「此項」不明確時，重複名稱。 |
+| 保留必要成分 | 不為縮短句子而省略必要主詞、受詞或條件。 |
+| 分開長句 | 不用分號連接句子。避免堆疊名詞與子句。 |
+| 限制段落主題 | 一段只寫一個主題。一段最多六句。 |
+| 列出順序與條件 | 三個以上步驟使用編號清單。多項條件使用清單。 |
+| 先寫警告 | 將警告放在對應的危險步驟之前。 |
+| 刪除空泛修飾 | 刪除無資訊的客套話、宣傳形容詞與重複語句。 |
+| 定義必要術語 | 保留必要技術詞。首次出現時解釋不常見的詞。 |
 
-- Reply language = user language. If the user writes ZH, give ZH first, then EN in the same structure.
-  回覆語言跟隨使用者；使用者用中文時，先中文，再附結構相同的英文。
-- Code identifiers, commit messages, and code comments: EN (STE).
-  程式識別字、commit 訊息、程式註解：英文（STE）。
-- Keep it short. Remove words that add no fact. 保持簡短，刪除無資訊的字。
+### 中文規則
 
-## Example 範例
+- 使用繁體中文，不用成語、俚語或比喻。
+- 每句以三十字內為目標。這是本技能的建議。
+- 不把英文詞數、冠詞與時態規則直接套用到中文。
+- 使用「必須」表示強制。「可以」表示允許。
+- 改寫時保留原文的「建議」，不可升級為「必須」。
 
-- ✗ "You might want to consider possibly running the tests."
-- ✓ "Run the tests." / 「執行測試。」
+### 英文規則
+
+- 指令與程序每句最多二十個英文單字。
+- 說明文字每句最多二十五個英文單字。
+- 名詞群組最多三個詞。必要時改用子句。
+- 優先使用簡單時態、明確動詞與常用詞。
+- 不用片語動詞。寫 `Start the job.`，不用 `Spin up the job.`。
+- 不省略必要冠詞。不任意更換同義詞。
+- 若複合時態承載必要資訊，保留該資訊並註明例外。
+
+### 原意優先
+
+- 保留數字、單位、否定、條件、例外與適用範圍。
+- 保留可能性與義務強度。不可將推測改成事實。
+- 「可能失敗」不能改成「失敗」。
+- 「可能由 X 造成」不能改成「原因是 X」。
+- 不新增原文沒有的原因、頻率、機制或操作要求。
+- 不刪除安全條件來滿足字數限制。
+- 縮短會失去精確性時，保留原句並指出原因。
+- 原文已清楚時，不強制改寫。
+
+## 工作流程
+
+1. 先讀懂任務或原文。
+2. 選擇嚴格或一般模式。
+3. 找出歧義、同義詞混用、空泛修飾與過長句子。
+4. 逐句改寫，保留原意。
+5. 對照原文，檢查事實、條件與語氣強度。
+6. 依輸出規則交付結果。
+
+一般任務可以先用一至兩句重述目標。
+只有需要多步驟時才列出計畫。
+純文字改寫不輸出重述或計畫。
+
+## 輸出規則
+
+- 使用者使用中文時，以繁體中文回覆。
+- 只有使用者要求雙語時，才附英文版本。
+- 程式識別字與提交訊息使用簡潔英文。
+- 註解與文件遵守專案語言慣例。
+- 一般任務報告結果、驗證證據與未完成項目。
+- 純改寫預設只輸出改寫文字，不加前言或摘要。
+- 刻意保留長句時，可以附一行「保留原句：原因」。
+- 使用者要求分析時，才提供下列比較表。
+
+| 規則 | 原文 | 改寫 |
+|---|---|---|
+| 保留可能性 | 請求可能因格式不符而失敗。 | 請求可能失敗。原因可能是格式不符。 |
+
+## 限制與資源
+
+本技能不重製官方字典，也不保證航空或國防文件合規。
+正式合規用途必須取得官方標準，逐詞核對。
+本技能只能改善表達，不能讓錯誤內容變成事實。
+本技能未附中文自動檢查器，必須人工核對原意。
+
+- [規則摘要與來源](references/writing-rules.md)
+- [中文改寫範例](examples/before-after.md)
+- [官方標準申請頁](https://www.asd-ste100.org/STE_downloads.html)
+- [原始專案](https://github.com/danyuchn/asd-ste100-skill)，取材自 v0.4.0。
+- 來源提交：`8da6b6340aa22faf46fd07db8efbdea010cd38d9`。
+- 中文改編：`louis70109`。原作：Dustin Yuchen Teng。
+- [MIT 授權與原作者版權聲明](LICENSE)
