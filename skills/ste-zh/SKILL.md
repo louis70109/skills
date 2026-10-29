@@ -123,6 +123,6 @@ ASD-STE100 只規範英文。
 - [中文改寫範例](examples/before-after.md)
 - [官方標準申請頁](https://www.asd-ste100.org/STE_downloads.html)
 - [原始專案](https://github.com/danyuchn/asd-ste100-skill)，取材自 v0.4.0。
-- 來源 commit：`8da6b6340aa22faf46fd07db8efbdea010cd38d9`。
+- 原文複本：`skills/asd-ste100`。來源 commit 記錄在 `upstream.json`。
 - 中文改編：`louis70109`。原作：Dustin Yuchen Teng。
 - [MIT 授權與原作者版權聲明](LICENSE)

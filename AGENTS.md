@@ -59,13 +59,23 @@ Follow these rules for each new skill. 新增 skill 時必須遵守：
 
 ## Upstream skills 上游 skill
 
-Some skills are copies of another repo. `upstream.json` lists each copy, its source, and the pinned commit.
-部分 skill 複製自其他 repo。`upstream.json` 列出每個複本、來源與鎖定的 commit。
+Some skills come from another repo. `upstream.json` lists each one, its source, the pinned commit, and the mode.
+部分 skill 來自其他 repo。`upstream.json` 列出每個 skill、來源、鎖定的 commit 與模式。
 
-| Skill | Source 來源 | License 授權 |
-|---|---|---|
-| `skills/taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT, `skills/taste-skill/LICENSE` |
+| Skill | Source 來源 | Mode 模式 | License 授權 |
+|---|---|---|---|
+| `skills/taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | sync | MIT, `skills/taste-skill/LICENSE` |
+| `skills/asd-ste100` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | sync | MIT, `skills/asd-ste100/LICENSE` |
+| `skills/ste-zh` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | notify | MIT, `skills/ste-zh/LICENSE` |
 
-1. **Do not edit** files in an upstream skill. The next sync replaces them. Rules 3 and 4 above do not apply to these files. 不可修改上游 skill 的檔案，下次同步會覆蓋。上方第 3、4 條不適用於這些檔案。
-2. **Add** a new upstream skill: copy the source folder and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源資料夾與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
-3. The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a source changes, it opens one PR per skill with a link to the upstream diff. Read the diff before you merge (`SECURITY-CHECKLIST.md` section 1). 工作流程每週一執行。來源有變更時，每個 skill 各開一個 PR，附上游 diff 連結。合併前必須先讀 diff。
+- **sync**: an exact copy of the source. Do not edit its files. The next sync replaces them. Rules 3 and 4 above do not apply. sync：來源的完整複本。不可修改，下次同步會覆蓋。上方第 3、4 條不適用。
+- **notify**: an adaptation of the source. A person updates it by hand. notify：來源的改編版，由人工更新。
+- `skills/asd-ste100` is the original of `ste-zh`. It has no routing row. Agents apply `ste-zh` (row 0). `skills/asd-ste100` 是 `ste-zh` 的原文，不列入路由表。代理套用 `ste-zh`（第 0 列）。
+
+The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a source changes:
+工作流程 `.github/workflows/upstream-sync.yml` 每週一執行。來源有變更時：
+
+1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`SECURITY-CHECKLIST.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
+2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。
+
+To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
