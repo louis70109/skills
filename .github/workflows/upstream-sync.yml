@@ -1,0 +1,110 @@
+# Check each skill in upstream.json against its source repo.
+# When the source changed:
+#   mode "sync":   open or update one PR that copies the new files.
+#   mode "notify": open or update one issue that asks a person to update the skill.
+# Both link to the upstream diff. Read it before you merge.
+name: Upstream sync
+
+on:
+  schedule:
+    - cron: "17 1 * * 1" # Monday 01:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: upstream-sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync changed skills
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          base="$(git rev-parse --abbrev-ref HEAD)"
+
+          count="$(jq length upstream.json)"
+          for i in $(seq 0 $((count - 1))); do
+            entry="$(jq -c ".[$i]" upstream.json)"
+            dest="$(jq -r .dest <<<"$entry")"
+            repo="$(jq -r .repo <<<"$entry")"
+            path="$(jq -r .path <<<"$entry")"
+            ref="$(jq -r .ref <<<"$entry")"
+            old="$(jq -r .commit <<<"$entry")"
+
+            mode="$(jq -r '.mode // "sync"' <<<"$entry")"
+
+            query="sha=$ref&per_page=1"
+            if [ "$path" != "." ]; then query="path=$path&$query"; fi
+            new="$(gh api "repos/$repo/commits?$query" --jq '.[0].sha')"
+            if [ -z "$new" ] || [ "$new" = "$old" ]; then
+              echo "$dest: up to date ($old)"
+              continue
+            fi
+            echo "$dest: $old -> $new ($mode)"
+            diff_url="https://github.com/$repo/compare/$old...$new"
+            tree_url="https://github.com/$repo/tree/$new"
+            if [ "$path" != "." ]; then tree_url="$tree_url/$path"; fi
+
+            if [ "$mode" = "notify" ]; then
+              title="Update $dest: upstream $repo changed"
+              body="Upstream: $tree_url
+          Diff: $diff_url
+
+          $dest is an adaptation. A person must update it by hand.
+          1. Read the diff.
+          2. Apply the changes that matter to $dest.
+          3. Set the commit of $dest in upstream.json to $new."
+              num="$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')"
+              if [ -n "$num" ]; then
+                gh issue edit "$num" --body "$body"
+              else
+                gh issue create --title "$title" --body "$body"
+              fi
+              continue
+            fi
+
+            branch="upstream/$(basename "$dest")"
+            git checkout -q -B "$branch" "origin/$base"
+
+            src="$(mktemp -d)"
+            git -C "$src" init -q
+            git -C "$src" fetch -q --depth 1 "https://github.com/$repo" "$new"
+            git -C "$src" checkout -q FETCH_HEAD
+
+            rm -rf "$dest"
+            cp -R "$src/$path/." "$dest"
+            rm -rf "$dest/.git"
+            if [ -f "$src/LICENSE" ]; then cp "$src/LICENSE" "$dest/LICENSE"; fi
+            jq --argjson i "$i" --arg c "$new" '.[$i].commit = $c' upstream.json > upstream.tmp
+            mv upstream.tmp upstream.json
+
+            git add -A "$dest" upstream.json
+            git commit -q -m "chore($(basename "$dest")): sync upstream ${new:0:7}"
+            git push -q -f origin "$branch"
+
+            body="Upstream: $tree_url
+          Diff: $diff_url
+
+          Read the upstream diff and changelog before you merge (SECURITY-CHECKLIST.md section 1)."
+            if gh pr view "$branch" --json state --jq .state 2>/dev/null | grep -q OPEN; then
+              gh pr edit "$branch" --title "Sync $dest with upstream ${new:0:7}" --body "$body"
+            else
+              gh pr create --base "$base" --head "$branch" \
+                --title "Sync $dest with upstream ${new:0:7}" --body "$body"
+            fi
+            git checkout -q "$base"
+          done

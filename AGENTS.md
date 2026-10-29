@@ -28,6 +28,7 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 10 | You cite or link a game ID (NPC, monster, item, map), or cross-check game data 引用、連結或交叉驗證遊戲資料 ID | `skills/rms-verify-game-data/SKILL.md` |
 | 11 | You change CSS, JS, or the Service Worker of the RMS guide site 修改 RMS 攻略庫的 CSS／JS／Service Worker | `skills/rms-frontend-pitfalls/SKILL.md` |
 | 12 | You ship the RMS guide site or its desktop app 發佈 RMS 攻略庫網站或桌面版 | `skills/rms-release/SKILL.md`, `SECURITY-CHECKLIST.md` |
+| 13 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
@@ -55,3 +56,26 @@ Follow these rules for each new skill. 新增 skill 時必須遵守：
 5. **Keep** it short. Apply `skills/minimal-dev/SKILL.md` to the skill itself. 保持精簡，skill 本身也套用 minimal-dev。
 6. **Check** if an existing row, `review-code`, or `SECURITY-CHECKLIST.md` must link to the new skill. Update them. 檢查是否需讓既有列、`review-code`、`SECURITY-CHECKLIST.md` 連結新 skill,並一併更新。
 7. **Commit** the skill and the table change together. 新 skill 與表格變更同一個 commit。
+
+## Upstream skills 上游 skill
+
+Some skills come from another repo. `upstream.json` lists each one, its source, the pinned commit, and the mode.
+部分 skill 來自其他 repo。`upstream.json` 列出每個 skill、來源、鎖定的 commit 與模式。
+
+| Skill | Source 來源 | Mode 模式 | License 授權 |
+|---|---|---|---|
+| `skills/taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | sync | MIT, `skills/taste-skill/LICENSE` |
+| `skills/asd-ste100` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | sync | MIT, `skills/asd-ste100/LICENSE` |
+| `skills/ste-zh` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | notify | MIT, `skills/ste-zh/LICENSE` |
+
+- **sync**: an exact copy of the source. Do not edit its files. The next sync replaces them. Rules 3 and 4 above do not apply. sync：來源的完整複本。不可修改，下次同步會覆蓋。上方第 3、4 條不適用。
+- **notify**: an adaptation of the source. A person updates it by hand. notify：來源的改編版，由人工更新。
+- `skills/asd-ste100` is the original of `ste-zh`. It has no routing row. Agents apply `ste-zh` (row 0). `skills/asd-ste100` 是 `ste-zh` 的原文，不列入路由表。代理套用 `ste-zh`（第 0 列）。
+
+The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a source changes:
+工作流程 `.github/workflows/upstream-sync.yml` 每週一執行。來源有變更時：
+
+1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`SECURITY-CHECKLIST.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
+2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。
+
+To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
