@@ -28,6 +28,7 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 10 | You cite or link a game ID (NPC, monster, item, map), or cross-check game data 引用、連結或交叉驗證遊戲資料 ID | `skills/rms-verify-game-data/SKILL.md` |
 | 11 | You change CSS, JS, or the Service Worker of the RMS guide site 修改 RMS 攻略庫的 CSS／JS／Service Worker | `skills/rms-frontend-pitfalls/SKILL.md` |
 | 12 | You ship the RMS guide site or its desktop app 發佈 RMS 攻略庫網站或桌面版 | `skills/rms-release/SKILL.md`, `SECURITY-CHECKLIST.md` |
+| 13 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
@@ -55,3 +56,16 @@ Follow these rules for each new skill. 新增 skill 時必須遵守：
 5. **Keep** it short. Apply `skills/minimal-dev/SKILL.md` to the skill itself. 保持精簡，skill 本身也套用 minimal-dev。
 6. **Check** if an existing row, `review-code`, or `SECURITY-CHECKLIST.md` must link to the new skill. Update them. 檢查是否需讓既有列、`review-code`、`SECURITY-CHECKLIST.md` 連結新 skill,並一併更新。
 7. **Commit** the skill and the table change together. 新 skill 與表格變更同一個 commit。
+
+## Upstream skills 上游 skill
+
+Some skills are copies of another repo. `upstream.json` lists each copy, its source, and the pinned commit.
+部分 skill 複製自其他 repo。`upstream.json` 列出每個複本、來源與鎖定的 commit。
+
+| Skill | Source 來源 | License 授權 |
+|---|---|---|
+| `skills/taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT, `skills/taste-skill/LICENSE` |
+
+1. **Do not edit** files in an upstream skill. The next sync replaces them. Rules 3 and 4 above do not apply to these files. 不可修改上游 skill 的檔案，下次同步會覆蓋。上方第 3、4 條不適用於這些檔案。
+2. **Add** a new upstream skill: copy the source folder and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源資料夾與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
+3. The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a source changes, it opens one PR per skill with a link to the upstream diff. Read the diff before you merge (`SECURITY-CHECKLIST.md` section 1). 工作流程每週一執行。來源有變更時，每個 skill 各開一個 PR，附上游 diff 連結。合併前必須先讀 diff。
