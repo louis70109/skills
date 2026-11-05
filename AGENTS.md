@@ -23,12 +23,7 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 5 | You create or change a message that a user sees (error, warning, alert) 建立或修改使用者看到的錯誤、警告、提醒 | `skills/ux-error-messages/SKILL.md` |
 | 6 | You review a code change, or you finish one 審查程式碼變更，或完成程式碼變更前 | `skills/review-code/SKILL.md` |
 | 7 | You ship code 發布程式碼 | `SECURITY-CHECKLIST.md` |
-| 8 | You find where content or code lives in the RMS guide repo 在 RMS 攻略庫查內容或程式位置 | `skills/rms-find-content/SKILL.md` |
-| 9 | You add or change RMS guide content (page, static page, category, NPC map, LEECH) 新增或修改 RMS 攻略庫內容 | `skills/rms-add-content/SKILL.md` |
-| 10 | You cite or link a game ID (NPC, monster, item, map), or cross-check game data 引用、連結或交叉驗證遊戲資料 ID | `skills/rms-verify-game-data/SKILL.md` |
-| 11 | You change CSS, JS, or the Service Worker of the RMS guide site 修改 RMS 攻略庫的 CSS／JS／Service Worker | `skills/rms-frontend-pitfalls/SKILL.md` |
-| 12 | You ship the RMS guide site or its desktop app 發佈 RMS 攻略庫網站或桌面版 | `skills/rms-release/SKILL.md`, `SECURITY-CHECKLIST.md` |
-| 13 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
+| 8 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
@@ -36,6 +31,19 @@ If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有�
 
 After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
 上下文被壓縮後，或新 session 開始時，必須重新讀取本表，並重讀目前任務需要的每個 skill。不可只憑 skill 的摘要工作。
+
+### Compaction limit 壓縮門檻
+
+Keep auto-compaction on. The limit is **75% of the context window by default**. You may lower it to **60%** for a task. Never go above 75% or below 60%. 必須開啟自動壓縮。預設在 context 視窗的 75% 觸發；依任務可調低至 60%；不可高於 75%、不可低於 60%。
+
+| Tool 工具 | Default 預設 (75%) | Lower 調低 (60%) |
+|---|---|---|
+| Claude Code | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=75` in `env` of `~/.claude/settings.json` | Run `/compact` by hand at about 60%, or start with a lower `--autocompact` value |
+| Codex | `model_auto_compact_token_limit = 204000` in `~/.codex/config.toml` (75% of a 272,000-token window) | Add `model_post_turn_compact_threshold_percent = 60` (compacts after a final answer) |
+
+- Do not set `DISABLE_AUTO_COMPACT`, `DISABLE_COMPACT`, or `autoCompactEnabled: false` in Claude Code. 不可在 Claude Code 關閉自動壓縮。Codex cannot turn it off. Codex 無法關閉。
+- Claude Code has no range setting. The env var holds one value, so use it for the 75% default. Claude Code 沒有範圍設定，環境變數只放預設的 75%。
+- For another window size, use 75% of that size. Codex has no percent setting for the token limit, so update the number when the model window changes. 其他視窗大小取該大小的 75%；Codex 的 token 門檻沒有百分比設定，模型視窗改變時要同步調整。
 
 ## Order 順序
 
