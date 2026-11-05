@@ -17,6 +17,7 @@ Apply with `skills/minimal-dev/SKILL.md` (scope), `skills/taste-skill/SKILL.md` 
    - Each view has all states: loading, empty, error, success, disabled. 每個畫面有完整狀態。
    - A user action gets feedback in 100 ms. Use an optimistic update or a skeleton for a slow call. 操作 100 ms 內有回饋；慢呼叫用樂觀更新或骨架。
    - Keyboard, focus order, visible focus, labels, and contrast meet WCAG 2.2 AA. 鍵盤、焦點、標籤、對比符合 WCAG 2.2 AA。
+   - *Don't make me think too much.* One clear primary action per view. Use familiar patterns, plain labels, and safe defaults. A user needs no manual. 每個畫面一個明確主要動作；用常見樣式、白話標籤、安全預設；使用者不需說明書。
    - Do not lose user input on an error or a route change. 錯誤或換頁時不遺失使用者輸入。
 2. **Smooth rendering 畫面流暢**
    - Core Web Vitals targets: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. 達成 Core Web Vitals 目標。

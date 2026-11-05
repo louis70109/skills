@@ -23,6 +23,7 @@ Extensibility means a **stable seam** at a real point of change (API contract, s
    - Timeouts, bounded retries, and idempotent writes (see `review-code` section 2). 逾時、有限重試、冪等寫入。
 2. **Extensibility 擴充性**
    - An API change is **additive**: new optional fields, no removed or renamed field. A break gets a new version. API 變更只增不減，破壞性變更開新版本。
+   - *Don't make me think too much.* An API has clear names, safe defaults, and one obvious way to do a task. A caller needs no guess. API 命名清楚、預設安全、做一件事只有一種明顯做法；呼叫者不必猜。
    - A clear contract (OpenAPI or schema) is the source of truth. Validate input at the boundary. 以明確契約為準，邊界驗證輸入。
    - Each module has one job and one-way dependencies. Hide a third-party service behind a thin interface of your own. 模組單一職責、單向依賴；第三方服務以薄介面隔離。
    - Slow or fan-out work goes to a job or an event, not the request path. 慢或扇出的工作走背景工作或事件。

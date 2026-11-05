@@ -10,6 +10,8 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 **Rule:** Build only what the task needs now. Make it work, make it correct, and stop.
 規則：只做當下任務需要的事；讓它能運作、正確，然後停手。
 
+**Note on feature work 功能實作備註:** *Don't make me think too much.* Make the feature obvious to use and obvious to read. A user needs no manual. A reader needs no guess. 功能要讓使用者不必思考、讓讀程式的人不必猜測。
+
 ## 1. Before you write 動手前
 
 1. State the task in one sentence. State what "done" means. 一句話說明任務與「完成」的定義。
