@@ -10,6 +10,8 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 **Rule:** Build only what the task needs now. Make it work, make it correct, and stop.
 規則：只做當下任務需要的事；讓它能運作、正確，然後停手。
 
+**Note on feature work 功能實作備註:** *Don't make me think too much.* Make the feature obvious to use and obvious to read. A user needs no manual. A reader needs no guess. 功能要讓使用者不必思考、讓讀程式的人不必猜測。
+
 ## 1. Before you write 動手前
 
 1. State the task in one sentence. State what "done" means. 一句話說明任務與「完成」的定義。
@@ -34,13 +36,21 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 The minimum is **not** zero quality. Keep these even in the smallest change. 最小不等於低品質，下列一律保留：
 
-- Correct behavior and a test for it (and for the main failure path). 正確行為與測試。
+- Correct behavior, with tests as in section 3.1. 正確行為，測試依 3.1。
 - Input validation at the boundary. 邊界輸入驗證。
 - No secret or personal data in code or logs (`skills/loki-logging/SKILL.md`). 無密鑰與個資。
 - A timeout on each network call. 網路呼叫逾時。
 - Clear user-facing errors (`skills/ux-error-messages/SKILL.md`). 清楚的使用者錯誤訊息。
 - Basic metrics and logs for a **new** endpoint or job (`skills/prometheus-guide/SKILL.md`): count, duration, outcome, one `ERROR` log with cause. 新端點或工作的基本指標與 log。
 - `skills/cve-check/SKILL.md` when you add a dependency. 新增依賴時執行 cve-check。
+
+### 3.1 Testing 測試
+
+Do not use TDD as a rule. Test what is worth the cost. 不強制 TDD，只測值得測的。
+
+- Write tests for domain rules, critical paths, and each bug fix (a test that fails before the fix). 為領域規則、關鍵路徑、每個 bug 修復寫測試。
+- Do not test trivial code, framework code, styling, markup details, or private details. 不測瑣碎程式、框架程式、樣式、標記細節、內部實作細節。
+- While you work, run only the tests that the change affects. Run the full suite once before you finish. 開發中只跑受影響的測試，完成前跑一次完整測試。
 
 ## 4. Grow by need 依需求成長
 

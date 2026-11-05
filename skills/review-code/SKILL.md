@@ -22,6 +22,10 @@ Review the change, not the author. Give a reason and a fix for each finding. 針
 Check against `skills/minimal-dev/SKILL.md`. Sections 1–6 apply to what the change needs. Do not ask for extra features, layers, or resilience without evidence. Report over-design as a **Major** finding: an unused option, an abstraction for one use, a needless dependency, or a change outside the task.
 對照 minimal-dev。第 1–6 節只針對變更所需；無證據不要求額外功能、分層或韌性機制。過度設計列為 **Major**:未使用的選項、單一用途的抽象、不必要的依賴、任務範圍外的變更。
 
+## 0.1 Stack focus 技術領域重點
+
+A change that touches the frontend: also apply the Review table of `skills/frontend-dev/SKILL.md`. A change that touches the backend: also apply the Review table of `skills/backend-dev/SKILL.md`. Apply both if the change touches both. 變更涉及前端或後端時，另外套用對應 skill 的 Review 表；兩者都涉及則都套用。
+
 ## 1. Usability 可用性
 
 - Does the change do what the purpose says? Does it handle the empty, null, large, and wrong input? 是否達成目的？是否處理空值、極端值、錯誤輸入？
@@ -48,7 +52,7 @@ Check against `skills/minimal-dev/SKILL.md`. Sections 1–6 apply to what the ch
 - No copy-paste. No dead code. No commented-out code. 無重複、無死碼、無註解掉的程式碼。
 - Dependencies point one way. No circular import. A new dependency has a reason (see section 6). 依賴單向；新依賴要有理由。
 - Comments explain **why**, not what. 註解說明「為什麼」。
-- Tests cover the new behavior, the error paths, and the edge cases. A bug fix has a test that fails before the fix. 測試涵蓋新行為、錯誤路徑、邊界；修 bug 須附先失敗的測試。
+- Tests cover the domain rules, the critical paths, and the risky edge cases. A bug fix has a test that fails before the fix. Do not ask for a test of trivial code or a private detail. 測試涵蓋領域規則、關鍵路徑、高風險邊界；修 bug 須附先失敗的測試；不要求測瑣碎程式或內部細節。
 - Tests are fast and do not depend on order, time, or network. 測試快速且獨立。
 - The change is small enough to review. If not, ask to split it. 變更過大則要求拆分。
 
