@@ -24,6 +24,8 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 6 | You review a code change, or you finish one 審查程式碼變更，或完成程式碼變更前 | `skills/review-code/SKILL.md` |
 | 7 | You ship code 發布程式碼 | `SECURITY-CHECKLIST.md` |
 | 8 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
+| 9 | You build, change, or review frontend code (UI, components, styles, client state, client performance) 開發、修改或審查前端程式碼（UI、元件、樣式、client 狀態、前端效能） | `skills/frontend-dev/SKILL.md` |
+| 10 | You build, change, or review backend code (API, service logic, database, jobs, integrations) 開發、修改或審查後端程式碼（API、服務邏輯、資料庫、背景工作、整合） | `skills/backend-dev/SKILL.md` |
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
