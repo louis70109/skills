@@ -34,16 +34,16 @@ After a context compaction or at the start of a new session, read this table aga
 
 ### Compaction limit 壓縮門檻
 
-Keep auto-compaction on. Set it to start at 60% of the context window. 必須開啟自動壓縮，並設為在 context 視窗的 60% 時觸發。
+Keep auto-compaction on. The limit is **75% of the context window by default**. You may lower it to **60%** for a task. Never go above 75% or below 60%. 必須開啟自動壓縮。預設在 context 視窗的 75% 觸發；依任務可調低至 60%；不可高於 75%、不可低於 60%。
 
-| Tool 工具 | Setting 設定 |
-|---|---|
-| Claude Code | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=60` in `env` of `~/.claude/settings.json` |
-| Codex | `model_auto_compact_token_limit = 163200` at the top level of `~/.codex/config.toml` (60% of a 272,000-token window) |
+| Tool 工具 | Default 預設 (75%) | Lower 調低 (60%) |
+|---|---|---|
+| Claude Code | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=75` in `env` of `~/.claude/settings.json` | Run `/compact` by hand at about 60%, or start with a lower `--autocompact` value |
+| Codex | `model_auto_compact_token_limit = 204000` in `~/.codex/config.toml` (75% of a 272,000-token window) | Add `model_post_turn_compact_threshold_percent = 60` (compacts after a final answer) |
 
 - Do not set `DISABLE_AUTO_COMPACT`, `DISABLE_COMPACT`, or `autoCompactEnabled: false` in Claude Code. 不可在 Claude Code 關閉自動壓縮。Codex cannot turn it off. Codex 無法關閉。
-- For another window size, use 60% of that size. 其他視窗大小，取該大小的 60%。
-- Codex has no percent setting for this limit. Update the number when the model window changes. Codex 此門檻沒有百分比設定；模型視窗改變時要同步調整數字。
+- Claude Code has no range setting. The env var holds one value, so use it for the 75% default. Claude Code 沒有範圍設定，環境變數只放預設的 75%。
+- For another window size, use 75% of that size. Codex has no percent setting for the token limit, so update the number when the model window changes. 其他視窗大小取該大小的 75%；Codex 的 token 門檻沒有百分比設定，模型視窗改變時要同步調整。
 
 ## Order 順序
 
