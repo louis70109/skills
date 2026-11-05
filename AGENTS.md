@@ -32,6 +32,18 @@ If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有�
 After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
 上下文被壓縮後，或新 session 開始時，必須重新讀取本表，並重讀目前任務需要的每個 skill。不可只憑 skill 的摘要工作。
 
+### Compaction limit 壓縮門檻
+
+Set auto-compaction to start at 60% of the context window. 將自動壓縮設為在 context 視窗的 60% 時觸發。
+
+| Tool 工具 | Setting 設定 |
+|---|---|
+| Claude Code | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=60` in `env` of `~/.claude/settings.json` |
+| Codex | `model_auto_compact_token_limit = 163200` at the top level of `~/.codex/config.toml` (60% of a 272,000-token window) |
+
+- For another window size, use 60% of that size. 其他視窗大小，取該大小的 60%。
+- Codex has no percent setting for this limit. Update the number when the model window changes. Codex 此門檻沒有百分比設定；模型視窗改變時要同步調整數字。
+
 ## Order 順序
 
 1. Read row 0 (`ste-zh`). 讀取第 0 列。
