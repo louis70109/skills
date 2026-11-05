@@ -9,7 +9,7 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 Priority 優先順序: **1. Flexibility → 2. Extensibility → 3. Efficiency.** When two rules conflict, the lower number wins. 規則衝突時，編號小者優先。
 
-Apply with `skills/minimal-dev/SKILL.md`, `skills/prometheus-guide/SKILL.md`, `skills/loki-logging/SKILL.md`, and `skills/cve-check/SKILL.md`. 搭配這些 skill 使用。
+Apply with `skills/minimal-dev/SKILL.md` (scope, testing), `skills/prometheus-guide/SKILL.md`, `skills/loki-logging/SKILL.md`, and `skills/cve-check/SKILL.md`. 搭配這些 skill 使用。
 
 Extensibility means a **stable seam** at a real point of change (API contract, schema, config, event). It does not mean an abstraction for a guess. Follow `minimal-dev`: add an abstraction at the third use. 擴充性指在真實會變動處留穩定接縫，不是為猜測而抽象。
 
@@ -23,7 +23,7 @@ Extensibility means a **stable seam** at a real point of change (API contract, s
    - Timeouts, bounded retries, and idempotent writes (see `review-code` section 2). 逾時、有限重試、冪等寫入。
 2. **Extensibility 擴充性**
    - An API change is **additive**: new optional fields, no removed or renamed field. A break gets a new version. API 變更只增不減，破壞性變更開新版本。
-   - *Don't make me think too much.* An API has clear names, safe defaults, and one obvious way to do a task. A caller needs no guess. API 命名清楚、預設安全、做一件事只有一種明顯做法；呼叫者不必猜。
+   - Apply the feature-work note of `minimal-dev`. An API has clear names, safe defaults, and one obvious way to do a task. A caller needs no guess. API 命名清楚、預設安全、做一件事只有一種明顯做法；呼叫者不必猜。
    - A clear contract (OpenAPI or schema) is the source of truth. Validate input at the boundary. 以明確契約為準，邊界驗證輸入。
    - Each module has one job and one-way dependencies. Hide a third-party service behind a thin interface of your own. 模組單一職責、單向依賴；第三方服務以薄介面隔離。
    - Slow or fan-out work goes to a job or an event, not the request path. 慢或扇出的工作走背景工作或事件。
@@ -44,14 +44,6 @@ Use Domain-Driven Design where the business rules are complex. For plain CRUD, s
 - One **bounded context** = one module. Contexts talk through an interface or an event. They do not share tables. 一個限界上下文一個模組；以介面或事件溝通，不共用資料表。
 - An **aggregate** is one consistency boundary and one transaction. Refer to another aggregate by id. 聚合是一個一致性邊界與一個交易；以 id 參照其他聚合。
 - The domain defines the repository interface. The infrastructure layer implements it. 領域層定義 repository 介面，基礎設施層實作。
-
-## Testing 測試
-
-Do not use TDD as a rule. Test what is worth the cost. 不強制 TDD，只測值得測的。
-
-- Write tests for domain rules, critical paths, and each bug fix (a test that fails before the fix). 為領域規則、關鍵路徑、每個 bug 修復寫測試。
-- Do not test trivial code, framework code, or private details. 不測瑣碎程式、框架程式、內部實作細節。
-- While you work, run only the tests that the change affects. Run the full suite once before you finish. 開發中只跑受影響的測試，完成前跑一次完整測試。
 
 ## Review 審查
 

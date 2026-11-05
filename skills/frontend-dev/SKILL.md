@@ -9,7 +9,7 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 Priority 優先順序: **1. UX → 2. Smooth rendering → 3. Consistency → 4. Efficiency.** When two rules conflict, the lower number wins. 規則衝突時，編號小者優先。
 
-Apply with `skills/minimal-dev/SKILL.md` (scope), `skills/taste-skill/SKILL.md` (visual design), and `skills/ux-error-messages/SKILL.md` (user-visible messages). 搭配 minimal-dev、taste-skill、ux-error-messages 使用。
+Apply with `skills/minimal-dev/SKILL.md` (scope, testing), `skills/taste-skill/SKILL.md` (visual design), and `skills/ux-error-messages/SKILL.md` (user-visible messages). 搭配 minimal-dev、taste-skill、ux-error-messages 使用。
 
 ## Build 開發
 
@@ -17,7 +17,7 @@ Apply with `skills/minimal-dev/SKILL.md` (scope), `skills/taste-skill/SKILL.md` 
    - Each view has all states: loading, empty, error, success, disabled. 每個畫面有完整狀態。
    - A user action gets feedback in 100 ms. Use an optimistic update or a skeleton for a slow call. 操作 100 ms 內有回饋；慢呼叫用樂觀更新或骨架。
    - Keyboard, focus order, visible focus, labels, and contrast meet WCAG 2.2 AA. 鍵盤、焦點、標籤、對比符合 WCAG 2.2 AA。
-   - *Don't make me think too much.* One clear primary action per view. Use familiar patterns, plain labels, and safe defaults. A user needs no manual. 每個畫面一個明確主要動作；用常見樣式、白話標籤、安全預設；使用者不需說明書。
+   - Apply the feature-work note of `minimal-dev`. One clear primary action per view. Use familiar patterns, plain labels, and safe defaults. A user needs no manual. 每個畫面一個明確主要動作；用常見樣式、白話標籤、安全預設；使用者不需說明書。
    - Do not lose user input on an error or a route change. 錯誤或換頁時不遺失使用者輸入。
 2. **Smooth rendering 畫面流暢**
    - Core Web Vitals targets: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. 達成 Core Web Vitals 目標。
@@ -34,14 +34,6 @@ Apply with `skills/minimal-dev/SKILL.md` (scope), `skills/taste-skill/SKILL.md` 
    - Long lists use virtualization or pagination. Debounce input-driven calls. Cancel stale requests. 長清單虛擬化或分頁；輸入防抖；取消過期請求。
    - Avoid needless re-render: stable keys, memoize only after measure. 避免無謂重繪；先量測再 memo。
    - Cache server data with a clear key and invalidation rule. 伺服器資料快取需有明確 key 與失效規則。
-
-## Testing 測試
-
-Do not use TDD as a rule. Test what is worth the cost. 不強制 TDD，只測值得測的。
-
-- Write tests for shared components, business logic, critical user flows, and each bug fix. 為共用元件、商業邏輯、關鍵使用者流程、每個 bug 修復寫測試。
-- Do not test styling, markup details, or framework code. 不測樣式、標記細節、框架程式。
-- While you work, run only the tests that the change affects. Run the full suite once before you finish. 開發中只跑受影響的測試，完成前跑一次完整測試。
 
 ## Review 審查
 
