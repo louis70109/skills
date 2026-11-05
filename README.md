@@ -72,7 +72,18 @@ ls ~/.agents/skills            # macOS
 dir $env:USERPROFILE\.agents\skills   # Windows PowerShell
 ```
 
-### 3. 啟用路由表
+### 3. Claude Code（每個專案各裝一次）
+
+Claude Code 的全域 skill 目錄（`~/.claude/skills`）在這台機器是符號連結，APM 不會透過符號連結部署，所以全域安裝會失敗。改在專案內安裝，產生專案內的 `.claude/skills/`：
+
+```
+cd /path/to/your-project
+apm install --target claude louis70109/skills/skills/ste-zh louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
+```
+
+會在專案產生 `apm.yml`、`apm.lock.yaml`、`.claude/skills/`，並在 `.gitignore` 加入 `apm_modules/`。要不要 commit 由你決定。更新時在專案內執行 `apm update --target claude`。
+
+### 4. 啟用路由表
 
 skill 裝好後，還要讓 agent 讀到路由表。把本 repo 的 `AGENTS.md` 放進你的專案根目錄（或全域設定）。Claude Code 用 `CLAUDE.md` 寫一行 `@AGENTS.md` 引用即可。
 
@@ -104,4 +115,4 @@ apm install -g --target agent-skills,codex "Leonxlnx/taste-skill/skills/taste-sk
 - macOS：已用 APM 0.35.0 完成遷移。9 個 skill 與 `taste-skill` 都經 APM 全域安裝，內容與本 repo 一致。
 - Windows：安裝步驟依 APM 官方文件整理，路徑與指令尚未在 Windows 實測。
 - Codex：安裝成功（與 OpenCode 共用 `~/.agents/skills`）。本機沒有 Codex CLI，尚未確認 Codex 實際讀取。
-- Claude Code：目前不支援全域安裝，因為 `~/.claude/skills` 是符號連結。見上方說明。
+- Claude Code：全域安裝不支援（`~/.claude/skills` 是符號連結）。改為每個專案安裝，見步驟 3。在暫存專案實測通過。
