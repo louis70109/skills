@@ -83,8 +83,8 @@ Some skills come from another repo. `upstream.json` lists each one, its source, 
 - **notify**: an adaptation of the source. A person updates it by hand. notify：來源的改編版，由人工更新。
 - `skills/asd-ste100` is the original of `ste-zh`. It has no routing row. Agents apply `ste-zh` (row 0). `skills/asd-ste100` 是 `ste-zh` 的原文，不列入路由表。代理套用 `ste-zh`（第 0 列）。
 
-The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a source changes:
-工作流程 `.github/workflows/upstream-sync.yml` 每週一執行。來源有變更時：
+The workflow `.github/workflows/upstream-sync.yml` runs each Sunday. When a source changes:
+工作流程 `.github/workflows/upstream-sync.yml` 每週日執行。來源有變更時：
 
 1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`SECURITY-CHECKLIST.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
 2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。

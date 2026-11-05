@@ -11,7 +11,7 @@ name: Upstream sync
 
 on:
   schedule:
-    - cron: "17 1 * * 1" # Monday 01:17 UTC
+    - cron: "17 1 * * 0" # Sunday 01:17 UTC
   workflow_dispatch:
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
