@@ -23,7 +23,7 @@ After the first step, find each row that matches the task. Read and apply **ever
 | 5 | You create or change a message that a user sees (error, warning, alert) 建立或修改使用者看到的錯誤、警告、提醒 | `skills/ux-error-messages/SKILL.md` |
 | 6 | You review a code change, or you finish one 審查程式碼變更，或完成程式碼變更前 | `skills/review-code/SKILL.md` |
 | 7 | You ship code 發布程式碼 | `SECURITY-CHECKLIST.md` |
-| 8 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `skills/taste-skill/SKILL.md` |
+| 8 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `design-taste-frontend` (external skill, see Upstream skills) |
 | 9 | You build, change, or review frontend code (UI, components, styles, client state, client performance) 開發、修改或審查前端程式碼（UI、元件、樣式、client 狀態、前端效能） | `skills/frontend-dev/SKILL.md` |
 | 10 | You build, change, or review backend code (API, service logic, database, jobs, integrations) 開發、修改或審查後端程式碼（API、服務邏輯、資料庫、背景工作、整合） | `skills/backend-dev/SKILL.md` |
 
@@ -74,11 +74,12 @@ Some skills come from another repo. `upstream.json` lists each one, its source, 
 
 | Skill | Source 來源 | Mode 模式 | License 授權 |
 |---|---|---|---|
-| `skills/taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | sync | MIT, `skills/taste-skill/LICENSE` |
+| `design-taste-frontend` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | external | MIT, `LICENSE` in the installed folder |
 | `skills/asd-ste100` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | sync | MIT, `skills/asd-ste100/LICENSE` |
 | `skills/ste-zh` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | notify | MIT, `skills/ste-zh/LICENSE` |
 
 - **sync**: an exact copy of the source. Do not edit its files. The next sync replaces them. Rules 3 and 4 above do not apply. sync：來源的完整複本。不可修改，下次同步會覆蓋。上方第 3、4 條不適用。
+- **external**: not stored in this repo (it is large and has scripts). Run `scripts/install-external.sh` to install the pinned commit to `~/.agents/skills` (`SKILLS_DIR` overrides). Rules 3 and 4 above do not apply. external：不放在此 repo（體積大且含腳本）。執行 `scripts/install-external.sh` 安裝鎖定的 commit 到 `~/.agents/skills`（可用 `SKILLS_DIR` 覆寫）。第 3、4 條不適用。
 - **notify**: an adaptation of the source. A person updates it by hand. notify：來源的改編版，由人工更新。
 - `skills/asd-ste100` is the original of `ste-zh`. It has no routing row. Agents apply `ste-zh` (row 0). `skills/asd-ste100` 是 `ste-zh` 的原文，不列入路由表。代理套用 `ste-zh`（第 0 列）。
 
@@ -87,5 +88,6 @@ The workflow `.github/workflows/upstream-sync.yml` runs each Monday. When a sour
 
 1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`SECURITY-CHECKLIST.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
 2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。
+3. For an **external** skill, it opens one issue. Read the upstream diff, set `commit` in `upstream.json` to the new commit, then run the install script. external：開一個 issue。讀上游 diff，將 `commit` 改為新 commit，再執行安裝腳本。
 
 To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
