@@ -9,7 +9,7 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 Priority 優先順序: **1. UX → 2. Smooth rendering → 3. Consistency → 4. Efficiency.** When two rules conflict, the lower number wins. 規則衝突時，編號小者優先。
 
-Apply with `skills/minimal-dev/SKILL.md` (scope, testing), `design-taste-frontend` (visual design, external skill, see `AGENTS.md`), and `skills/ux-error-messages/SKILL.md` (user-visible messages). 搭配 minimal-dev、taste-skill、ux-error-messages 使用。
+Apply with `skills/minimal-dev/SKILL.md` (scope, testing), `taste-skill` (visual design, external skill, see `AGENTS.md`), and `skills/ux-error-messages/SKILL.md` (user-visible messages). 搭配 minimal-dev、taste-skill、ux-error-messages 使用。
 
 ## Build 開發
 

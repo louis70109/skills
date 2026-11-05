@@ -23,7 +23,7 @@
 | `loki-logging` | 建立或修改 logger 時，讓 log 符合 Loki 設計。 |
 | `ux-error-messages` | 使用者看得到的錯誤、警告訊息的寫法。 |
 | `asd-ste100` | `ste-zh` 的上游原文（英文 ASD-STE100）。沒有路由，不需要安裝。 |
-| `design-taste-frontend` | 外部 skill，不在此 repo。網頁與 landing page 的視覺設計。見下方「外部 skill」。 |
+| `taste-skill` | 外部 skill，不在此 repo。網頁與 landing page 的視覺設計（SKILL.md 內 name 為 `design-taste-frontend`）。見下方「外部 skill」。 |
 
 ## 安裝
 
@@ -87,21 +87,17 @@ apm uninstall -g louis70109/skills/skills/minimal-dev
 
 ## 外部 skill
 
-`design-taste-frontend` 來自 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)。體積大（約 39 MB）且含會啟動瀏覽器的腳本，所以不放進此 repo。固定在審查過的 commit 安裝：
+`taste-skill` 來自 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)。體積大（約 39 MB）且含會啟動瀏覽器的腳本，所以不放進此 repo。固定在審查過的 commit 安裝：
 
 ```
 apm install -g --target agent-skills "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
 ```
 
-需要 Node 22 以上與 Chrome、Edge 或 Chromium（上游說明）。使用前請自行檢視腳本。
+安裝後資料夾為 `taste-skill`。需要 Node 22 以上與 Chrome、Edge 或 Chromium（上游說明）。它的腳本會啟動瀏覽器並對外抓取資料，使用前請自行檢視。
 
-macOS 也可以用本 repo 的腳本代替（需要 `jq`）：
-
-```bash
-./scripts/install-external.sh
-```
+升級時先把上方 commit 改為新值（經過審查後），再重新執行同一行指令。
 
 ## 驗證狀態
 
-- macOS：以上 APM 指令已實測可用（升級到 APM 0.35.0 後，安裝單一與多個 skill、全域安裝都成功）。
+- macOS：已用 APM 0.35.0 完成遷移。9 個 skill 與 `taste-skill` 都經 APM 全域安裝，內容與本 repo 一致。
 - Windows：安裝步驟依 APM 官方文件整理，路徑與指令尚未在 Windows 實測。

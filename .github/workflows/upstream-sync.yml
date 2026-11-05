@@ -3,7 +3,7 @@
 #   mode "sync":   open or update one PR that copies the new files.
 #   mode "notify": open or update one issue that asks a person to update the skill.
 #   mode "external": not stored in this repo. Open or update one issue that asks a person to
-#                    bump the pinned commit. scripts/install-external.sh installs that commit.
+#                    bump the pinned commit. Install it with APM (see README).
 # Both link to the upstream diff. Read it before you merge.
 # Only a commit older than MIN_AGE_DAYS counts (SECURITY-CHECKLIST.md section 1).
 # One bad entry does not stop the others. The job fails at the end if any entry failed.
@@ -84,7 +84,7 @@ jobs:
           $dest is installed from upstream, not stored in this repo.
           1. Read the diff (SECURITY-CHECKLIST.md section 1).
           2. Set the commit of $dest in upstream.json to $new.
-          3. Run scripts/install-external.sh to install it."
+          3. Reinstall it with APM (see README)."
               else
                 body="Upstream: $tree_url
           Diff: $diff_url
