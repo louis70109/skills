@@ -53,7 +53,7 @@ apm --version
 macOS 與 Windows 都執行同一行（整行貼上）：
 
 ```
-apm install -g --target agent-skills louis70109/skills/skills/ste-zh louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages
+apm install -g --target agent-skills,codex louis70109/skills/skills/ste-zh louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages
 ```
 
 只裝其中幾個時，保留需要的項目即可。
@@ -79,18 +79,20 @@ skill 裝好後，還要讓 agent 讀到路由表。把本 repo 的 `AGENTS.md` 
 ### 更新與移除
 
 ```bash
-apm update -g
-apm uninstall -g louis70109/skills/skills/minimal-dev
+apm update -g --target agent-skills,codex
+apm uninstall -g --target agent-skills,codex louis70109/skills/skills/minimal-dev
 ```
 
 若要固定版本，在路徑後加 `#<tag 或 commit>`，例如 `louis70109/skills/skills/minimal-dev#<commit>`。不固定時，`apm update -g` 會取最新的 `main`。
+
+**一定要加 `--target agent-skills,codex`**。不加的話，APM 會自動偵測到 `~/.claude`，嘗試部署到 Claude，而 `~/.claude/skills` 是指向 dotfiles 的符號連結，安裝會失敗。
 
 ## 外部 skill
 
 `taste-skill` 來自 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)。體積大（約 39 MB）且含會啟動瀏覽器的腳本，所以不放進此 repo。固定在審查過的 commit 安裝：
 
 ```
-apm install -g --target agent-skills "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
+apm install -g --target agent-skills,codex "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
 ```
 
 安裝後資料夾為 `taste-skill`。需要 Node 22 以上與 Chrome、Edge 或 Chromium（上游說明）。它的腳本會啟動瀏覽器並對外抓取資料，使用前請自行檢視。
@@ -101,3 +103,5 @@ apm install -g --target agent-skills "Leonxlnx/taste-skill/skills/taste-skill#f5
 
 - macOS：已用 APM 0.35.0 完成遷移。9 個 skill 與 `taste-skill` 都經 APM 全域安裝，內容與本 repo 一致。
 - Windows：安裝步驟依 APM 官方文件整理，路徑與指令尚未在 Windows 實測。
+- Codex：安裝成功（與 OpenCode 共用 `~/.agents/skills`）。本機沒有 Codex CLI，尚未確認 Codex 實際讀取。
+- Claude Code：目前不支援全域安裝，因為 `~/.claude/skills` 是符號連結。見上方說明。
