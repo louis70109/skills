@@ -3,6 +3,8 @@
 #   mode "sync":   open or update one PR that copies the new files.
 #   mode "notify": open or update one issue that asks a person to update the skill.
 # Both link to the upstream diff. Read it before you merge.
+# Only a commit older than MIN_AGE_DAYS counts (SECURITY-CHECKLIST.md section 1).
+# One bad entry does not stop the others. The job fails at the end if any entry failed.
 name: Upstream sync
 
 on:
@@ -30,12 +32,15 @@ jobs:
       - name: Sync changed skills
         env:
           GH_TOKEN: ${{ github.token }}
+          MIN_AGE_DAYS: "3"
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           base="$(git rev-parse --abbrev-ref HEAD)"
 
+          failed=0
+          until="$(date -u -d "$MIN_AGE_DAYS days ago" +%Y-%m-%dT%H:%M:%SZ)"
           count="$(jq length upstream.json)"
           for i in $(seq 0 $((count - 1))); do
             entry="$(jq -c ".[$i]" upstream.json)"
@@ -47,11 +52,20 @@ jobs:
 
             mode="$(jq -r '.mode // "sync"' <<<"$entry")"
 
-            query="sha=$ref&per_page=1"
+            query="sha=$ref&until=$until&per_page=1"
             if [ "$path" != "." ]; then query="path=$path&$query"; fi
-            new="$(gh api "repos/$repo/commits?$query" --jq '.[0].sha')"
+            if ! new="$(gh api "repos/$repo/commits?$query" --jq '.[0].sha')"; then
+              echo "::error::$dest: cannot read $repo at ref '$ref'. Check ref in upstream.json."
+              failed=1
+              continue
+            fi
             if [ -z "$new" ] || [ "$new" = "$old" ]; then
               echo "$dest: up to date ($old)"
+              continue
+            fi
+            status="$(gh api "repos/$repo/compare/$old...$new" --jq .status 2>/dev/null || echo unknown)"
+            if [ "$status" != "ahead" ]; then
+              echo "$dest: $new is not ahead of $old ($status). Skip."
               continue
             fi
             echo "$dest: $old -> $new ($mode)"
@@ -108,3 +122,4 @@ jobs:
             fi
             git checkout -q "$base"
           done
+          exit "$failed"
