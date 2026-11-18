@@ -29,6 +29,13 @@ After the first step, find each row that matches the task. Read and apply **ever
 
 If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
 
+## Recheck skills during a task 任務途中重新檢查 skills
+
+Recheck the skill catalog when a new phase starts, the task scope changes, or a new technical need appears.
+Read and apply all additional applicable skills. Keep existing rules that still apply, then continue the task.
+
+開始新階段、任務範圍改變，或發現新的技術需求時，重新檢查技能目錄。讀取所有新增且適用的 Skills，保留仍適用的既有規則，再繼續任務。
+
 ## After context compaction 上下文壓縮後
 
 After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
