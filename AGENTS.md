@@ -36,6 +36,17 @@ Read and apply all additional applicable skills. Keep existing rules that still 
 
 開始新階段、任務範圍改變，或發現新的技術需求時，重新檢查技能目錄。讀取所有新增且適用的 Skills，保留仍適用的既有規則，再繼續任務。
 
+## Subagent delegation and handoff Subagent 委派與交接
+
+1. When delegating, provide the task objective, allowed file scope, applicable skill paths, constraints, and acceptance criteria.
+   委派任務時，交代任務目標、可修改的檔案範圍、適用 skill 路徑、限制與驗收條件。
+2. Before starting work, the subagent must read this `AGENTS.md` and every applicable skill. Do not assume it receives the parent agent's conversation or previously loaded skills.
+   Subagent 開始工作前，必須讀取本 `AGENTS.md` 與所有適用的 skill。不可假設它已收到主 agent 的對話或已載入的 skills。
+3. During execution, follow [Recheck skills during a task](#recheck-skills-during-a-task-任務途中重新檢查-skills).
+   執行途中，遵守上方「任務途中重新檢查 skills」規則。
+4. On completion, report changes, verification results, and unfinished work. The parent agent reviews and integrates the results.
+   完成後，回報變更、驗證結果與未完成事項。主 agent 負責檢查並整合結果。
+
 ## After context compaction 上下文壓縮後
 
 After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
