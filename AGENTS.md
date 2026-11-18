@@ -36,38 +36,10 @@ Read and apply all additional applicable skills. Keep existing rules that still 
 
 開始新階段、任務範圍改變，或發現新的技術需求時，重新檢查技能目錄。讀取所有新增且適用的 Skills，保留仍適用的既有規則，再繼續任務。
 
-## Main agent roles and dispatch 主 agent 職責與派工
-
-The main agent owns Router and Controller duties. It assigns implementation work and keeps final acceptance authority.
-These are responsibilities, not separate agents by default. Model means domain and data logic, not the language model.
-主 agent 負責 Router 與 Controller，明確分配實作工作，並保留最終驗收責任。
-以下是職責劃分，不要求每個角色都建立獨立 agent。Model 指業務與資料邏輯，不是語言模型。
-
-| Role 角色 | Owner 負責者 | Responsibility 職責 |
-|---|---|---|
-| Router | Main agent 主 agent | Match the task against every routing row and select all applicable skills. 比對所有路由列，選出全部適用的 skills。 |
-| Middleware | Main agent and each worker 主 agent 與每個執行者 | Apply matching shared rules, such as language, logging, and dependency checks. Do not create an agent for each rule. 套用符合情境的語言、logging、依賴檢查等共通規則；不為每條規則建立 agent。 |
-| Controller | Main agent 主 agent | Split tasks, define interfaces and dependencies, assign owners, and verify and integrate results. 拆解任務、定義介面與相依關係、指派負責者，並驗收、整合結果。 |
-| Model | Assigned implementer 指定的實作者 | Implement domain rules, data access, and related tests within the assigned scope. 在指定範圍實作業務規則、資料存取與相關測試。 |
-| View | Assigned presenter 指定的呈現者 | Build UI or present results using agreed interfaces. Keep domain rules in Model. 依約定介面實作 UI 或呈現結果，業務規則由 Model 負責。 |
-
-### Dispatch rules 派工規則
-
-1. Before execution, the Controller lists each task's role, owner, dependencies, inputs, expected outputs, and acceptance criteria. Include applicable skill paths and allowed file scope. The main agent may own a task, but must name its role.
-   執行前，Controller 列出每項任務的角色、負責者、相依關係、輸入、預期產物與驗收條件，並指定 skill 路徑與可修改範圍。主 agent 可自行執行，但須標明當下角色。
-2. Delegate independent Model or View tasks with clear ownership when the host supports subagents and applicable permissions allow delegation. Otherwise, the main agent executes them and states the reason. Use the handoff rules below for every delegation.
-   宿主支援 subagent，且適用權限允許委派時，將可獨立處理、權責清楚的 Model 或 View 任務交給 subagent。其餘由主 agent 執行並說明原因；每次委派都遵守下方交接規則。
-3. Run tasks in parallel only when they are independent and their write scopes do not overlap. Run dependent tasks or tasks that modify the same files in sequence.
-   只有彼此獨立且修改範圍不重疊的任務可並行。有相依關係或修改同一檔案的任務，必須依序執行。
-4. Before dispatch, attach applicable Middleware requirements to each task. Check them at acceptance. If a check fails, the Controller returns the task and failure evidence to its owner for correction.
-   派工前，為每項任務附上適用的 Middleware 要求，並在驗收時檢查。檢查未通過時，Controller 將任務與失敗證據交回負責者修正。
-5. The Controller verifies returned evidence before integrating results. A subagent report alone does not establish that acceptance criteria passed. View work may use agreed interfaces before implementation finishes; final reporting must use accepted results.
-   Controller 驗證回報證據後，才整合結果。不可只憑 subagent 的完成回報，就認定驗收通過。View 可先依約定介面開發；最終報告必須使用已驗收的結果。
-
 ## Subagent delegation and handoff Subagent 委派與交接
 
-1. When delegating, provide the task objective, assigned role, inputs, expected outputs, dependencies, and allowed file scope. Include applicable skill paths, constraints, and acceptance criteria.
-   委派任務時，交代任務目標、指定角色、輸入、預期產物、相依關係、可修改的檔案範圍、適用 skill 路徑、限制與驗收條件。
+1. When delegating, provide the task objective, allowed file scope, applicable skill paths, constraints, and acceptance criteria.
+   委派任務時，交代任務目標、可修改的檔案範圍、適用 skill 路徑、限制與驗收條件。
 2. Before starting work, the subagent must read this `AGENTS.md` and every applicable skill. Do not assume it receives the parent agent's conversation or previously loaded skills.
    Subagent 開始工作前，必須讀取本 `AGENTS.md` 與所有適用的 skill。不可假設它已收到主 agent 的對話或已載入的 skills。
 3. During execution, follow [Recheck skills during a task](#recheck-skills-during-a-task-任務途中重新檢查-skills).
@@ -98,7 +70,7 @@ Keep auto-compaction on. The limit is **75% of the context window by default**. 
 1. Read row 0 (`ste-zh`). 讀取第 0 列。
 2. Restate the task in STE. 以 STE 重述任務。
 3. List the matching rows. 列出符合的列。
-4. Declare roles and ownership using the dispatch rules above, then execute the task. 依上方派工規則宣告角色與負責者，再執行任務。
+4. Do the task. 執行任務。
 5. Check the output against each matching skill. 對照每個符合的 skill 檢查輸出。
 
 ## Add a new skill 新增 skill
