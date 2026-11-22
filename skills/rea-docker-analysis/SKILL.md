@@ -67,6 +67,7 @@ docker run -d --name rea --platform linux/amd64 --network none --memory 6g -v "<
 
 - `--network none`：分析不需要網路。切斷網路可以降低風險。
 - `/samples` 是唯讀，樣本不會被修改。
+- `/out` 的檔案由容器內的 `analyst`（UID 1001）建立，權限是 600。在 Linux 主機上，可能需要 `sudo` 才能讀取。
 
 就緒檢查：
 
@@ -74,16 +75,19 @@ docker run -d --name rea --platform linux/amd64 --network none --memory 6g -v "<
 docker exec rea rea doctor --provider ghidra --json
 ```
 
-檢查沒通過時，讀 JSON 裡的錯誤訊息並修正。常見原因是 Ghidra 路徑、JDK 版本、缺少 `ps`。不要強行執行分析。
+- 先看 `healthy`，再看 `providerInspections` 中 `ghidra` 的各項檢查。
+- IDA、JADX、Kuna、Hopper 沒有安裝，它們的檢查會失敗。這是正常的。
+- `healthy` 不是 `true` 時，讀 JSON 裡的錯誤訊息並修正。常見原因是 Ghidra 路徑、JDK 版本、缺少 `ps`。不要強行執行分析。
 
 ## 4. 分析流程（CLI）
 
-路徑一律使用容器內的絕對路徑。每次 CLI 呼叫都會重新匯入與分析。大檔案第一次會比較久。
+路徑一律使用容器內的絕對路徑。每次 CLI 呼叫都會重新匯入與分析。測試時，108 KB 的 exe 每次約 25 秒。大檔案會更久。
 
 ```
 docker exec rea rea analyze   /samples/target.exe --provider ghidra --json
 docker exec rea rea search    /samples/target.exe "關鍵字" --provider ghidra --json
-docker exec rea rea function  /samples/target.exe main --provider ghidra --json
+docker exec rea rea function  /samples/target.exe --procedure entry --provider ghidra --json
+docker exec rea rea decompile /samples/target.exe --procedure entry --provider ghidra --json
 docker exec rea rea decompile /samples/target.exe 0x401000 --provider ghidra --json
 docker exec rea rea xrefs     /samples/target.exe 0x401000 --provider ghidra --json
 docker exec rea rea trace     /samples/target.exe "關鍵字" --provider ghidra --json
@@ -95,9 +99,14 @@ docker exec rea rea trace     /samples/target.exe "關鍵字" --provider ghidra 
 2. 依使用者的問題，用 `search` 或 `trace` 找相關字串或功能。
 3. 對找到的函式，用 `function` 看完整資料，用 `decompile` 看虛擬碼。
 4. 用 `xrefs` 追蹤呼叫者與被引用的項目。
-5. 輸出很大時，加上 `--detail summary --evidence_output /out/<名稱>.json`，再讀該檔案。
+5. 輸出很大時：
+   - `function` 與 `trace`：加上 `--detail summary --evidence_output /out/<名稱>.json`，再讀該檔案。
+   - 其他指令不接受 `--detail`。改用全域選項 `--filter-output <鍵>` 只取需要的欄位，例如 `--filter-output normalized_result`。
+   - 不要和 `--json` 一起使用 `--token-limit`，REA 會回報 `UNSUPPORTED_OUTPUT_COMBINATION`。
 
-文件沒有列出「列出所有字串」或「列出所有函式」的子指令。需要時，先執行 `docker exec rea rea --help` 與 `docker exec rea rea <子指令> --help`，確認可用的選項。不要猜旗標。
+`analyze` 只回傳概觀與數量（區段、函式數、字串數），不列出入口位址。PE 的入口函式在 Ghidra 中名為 `entry`，可以用 `--procedure entry` 開始追。
+
+需要其他功能時，先執行 `docker exec rea rea --help` 與 `docker exec rea rea <子指令> --help`，確認可用的子指令與選項。不要猜旗標。
 
 回報給使用者時：
 - 說明找到什麼。
@@ -112,9 +121,10 @@ MCP 模式會在同一個 session 重用已匯入的檔案。連續追問時比�
 claude mcp add --scope local rea -- docker exec -i rea rea mcp
 ```
 
-**警告：** 官方文件只示範用 node 直接執行 `rea.mjs mcp`。透過 `docker exec -i` 轉接 stdio 是推論的做法，尚未驗證。
+官方文件只示範用 node 直接執行 `rea.mjs mcp`。透過 `docker exec -i` 轉接 stdio 已經在協定層測試過：`initialize` 與 `tools/list` 正常，回傳 255 個工具。在 Claude Code 中用 `claude mcp add` 註冊的步驟尚未測試。
 
 - 新增後，必須重新開啟 Claude Code session，才會出現 REA 的工具。
+- 容器 `rea` 必須在執行中。
 - 檢查設定：`docker exec rea rea mcp doctor --json`。
 
 ## 6. 收尾
@@ -136,6 +146,11 @@ docker rm rea
 
 ## 驗證狀態
 
-- 已確認：`rea-agents` 6.9.0 的程式碼中有上列子指令名稱、`--detail summary`、`--evidence_output` 與環境變數。這只是文字比對，沒有執行。
+2026-11-22 在 Linux x86_64 的 Docker 29.10 上測試：
+
+- 已確認：映像建置成功，Node 與 Ghidra 的 SHA-256 核對通過。
+- 已確認：`rea doctor` 回報 `healthy: true`，Ghidra 的 8 項檢查全部通過。
+- 已確認：在 `--network none` 下，用一個 PE32+ x86-64 的 exe 執行 `analyze`、`search`、`function`、`decompile`、`xrefs`、`trace`，全部成功。
+- 已確認：`docker exec -i rea rea mcp` 的 MCP 協定正常。`rea mcp doctor` 回報 `healthy: true`。
 - 已確認：lockfile 加上 `--omit=optional` 後，`npm audit` 結果為 0 筆。
-- 尚未驗證：映像建置、`rea doctor`、實際分析、MCP 轉接。
+- 尚未驗證：Claude Code 的 `claude mcp add`、Apple Silicon 的模擬執行、大型執行檔。
