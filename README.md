@@ -25,6 +25,7 @@
 | `loki-logging` | 建立或修改 logger 時，讓 log 符合 Loki 設計。 |
 | `ux-error-messages` | 使用者看得到的錯誤、警告訊息的寫法。 |
 | `security-checklist` | 發布程式碼前的安全檢查清單。 |
+| `rea-docker-analysis` | 逆向分析或反編譯 .exe、.dll 等原生執行檔。在隔離的 Docker 容器內用 REA + Ghidra 做靜態分析。需要 Docker。 |
 | `asd-ste100` | `ste-zh` 的上游原文（英文 ASD-STE100）。沒有路由，不需要安裝。 |
 | `taste-skill` | 外部 skill，不在此 repo。網頁與 landing page 的視覺設計（SKILL.md 內 name 為 `design-taste-frontend`）。見下方「外部 skill」。 |
 
@@ -56,7 +57,7 @@ apm --version
 macOS 與 Windows 都執行同一行（整行貼上）：
 
 ```
-apm install -g --target agent-skills,codex louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages
+apm install -g --target agent-skills,codex louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages louis70109/skills/skills/rea-docker-analysis
 ```
 
 只裝其中幾個時，保留需要的項目即可。
@@ -81,7 +82,7 @@ Claude Code 的全域 skill 目錄（`~/.claude/skills`）在這台機器是符�
 
 ```
 cd /path/to/your-project
-apm install --target claude louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
+apm install --target claude louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages louis70109/skills/skills/rea-docker-analysis "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
 ```
 
 會在專案產生 `apm.yml`、`apm.lock.yaml`、`.claude/skills/`，並在 `.gitignore` 加入 `apm_modules/`。要不要 commit 由你決定。更新時在專案內執行 `apm update --target claude`。

@@ -42,6 +42,7 @@ Find each row that matches the task. Read and apply **every** matching skill. A 
 | 9 | You build, change, or review frontend code (UI, components, styles, client state, client performance) 開發、修改或審查前端程式碼（UI、元件、樣式、client 狀態、前端效能） | `*.tsx`, `*.jsx`, `*.vue`, `*.svelte`, `*.css`, `*.scss` | `frontend-dev` |
 | 10 | You build, change, or review backend code (API, service logic, database, jobs, integrations) 開發、修改或審查後端程式碼（API、服務邏輯、資料庫、背景工作、整合） | API routes, models, migrations, `*.sql`, job or worker files API 路由、model、migration、`*.sql`、背景工作檔 | `backend-dev` |
 | 11 | You start or finish a task in a project, or the user asks to set up project memory 在專案中開始或結束任務，或使用者要求建立專案記憶 | `.agents/` exists, or is missing `.agents/` 存在或不存在 | `repo-memory` |
+| 12 | You reverse engineer or decompile a native binary (.exe, .dll, ELF, Mach-O) 逆向分析或反編譯原生執行檔 | `*.exe`, `*.dll`, `*.so`, `*.dylib` | `rea-docker-analysis` |
 
 - A signal is a hint. A signal in the change or in the project applies the row. A row whose "When" matches applies, also with no signal. 訊號是提示：變更或專案中出現訊號就套用該列；「情境」符合時，沒有訊號也套用。
 - If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
