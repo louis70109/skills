@@ -1,88 +1,29 @@
 # AGENTS.md
 
-## Required first step 強制第一步
+<!-- louis70109/skills:start -->
+## Skills
+Before any action, read and apply the skill `skill-router`.
+Find it at `<folder>/skill-router/SKILL.md`. Look in `.claude/skills/`, `.agents/skills/`, `skills/`, `~/.claude/skills/`, and `~/.agents/skills/`.
+If you cannot find it, tell the user.
+<!-- louis70109/skills:end -->
 
-Before any action, read and apply `skills/ste-zh/SKILL.md`.
-Do this for every task. Do not skip it. Do not start work before it.
+## This repo 本 repo
 
-在執行任何動作之前，必須先讀取並套用 `skills/ste-zh/SKILL.md`。
-每個任務都要做。不可跳過。不可先動工。
+This repo is the base layer. Each project adds its own layer in `.agents/` (see `repo-memory`). The routing table is in `skills/skill-router/SKILL.md`.
+本 repo 是基礎層。各專案在 `.agents/` 加上自己的專案層（見 `repo-memory`）。路由表在 `skills/skill-router/SKILL.md`。
 
-## Routing table 路由表
-
-After the first step, find each row that matches the task. Read and apply **every** matching skill. A task can match many rows.
-第一步之後，找出所有符合任務的列，並讀取、套用**每一個**符合的 skill。一個任務可以符合多列。
-
-| # | When 情境 | Apply 套用 |
-|---|---|---|
-| 0 | Every task 每個任務 | `skills/ste-zh/SKILL.md` |
-| 1 | You design or write code 設計或撰寫程式碼 | `skills/minimal-dev/SKILL.md` |
-| 2 | You add, update, or ship Node/Python dependencies 新增、更新、發布 Node/Python 依賴 | `skills/cve-check/SKILL.md` |
-| 3 | You create or change a backend service 建立或修改後端服務 | `skills/prometheus-guide/SKILL.md` |
-| 4 | You create or change a logger or log output 建立或修改 logger／log 輸出 | `skills/loki-logging/SKILL.md` |
-| 5 | You create or change a message that a user sees (error, warning, alert) 建立或修改使用者看到的錯誤、警告、提醒 | `skills/ux-error-messages/SKILL.md` |
-| 6 | You review a code change, or you finish one 審查程式碼變更，或完成程式碼變更前 | `skills/review-code/SKILL.md` |
-| 7 | You ship code 發布程式碼 | `SECURITY-CHECKLIST.md` |
-| 8 | You design, build, redesign, or review a web page, landing page, dashboard, or app screen 設計、建立、改版或審查網頁、landing page、dashboard、App 畫面 | `taste-skill` (external skill, see Upstream skills) |
-| 9 | You build, change, or review frontend code (UI, components, styles, client state, client performance) 開發、修改或審查前端程式碼（UI、元件、樣式、client 狀態、前端效能） | `skills/frontend-dev/SKILL.md` |
-| 10 | You build, change, or review backend code (API, service logic, database, jobs, integrations) 開發、修改或審查後端程式碼（API、服務邏輯、資料庫、背景工作、整合） | `skills/backend-dev/SKILL.md` |
-
-If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
-
-## Recheck skills during a task 任務途中重新檢查 skills
-
-Recheck the skill catalog when a new phase starts, the task scope changes, or a new technical need appears.
-Read and apply all additional applicable skills. Keep existing rules that still apply, then continue the task.
-
-開始新階段、任務範圍改變，或發現新的技術需求時，重新檢查技能目錄。讀取所有新增且適用的 Skills，保留仍適用的既有規則，再繼續任務。
-
-## Subagent delegation and handoff Subagent 委派與交接
-
-1. When delegating, provide the task objective, allowed file scope, applicable skill paths, constraints, and acceptance criteria.
-   委派任務時，交代任務目標、可修改的檔案範圍、適用 skill 路徑、限制與驗收條件。
-2. Before starting work, the subagent must read this `AGENTS.md` and every applicable skill. Do not assume it receives the parent agent's conversation or previously loaded skills.
-   Subagent 開始工作前，必須讀取本 `AGENTS.md` 與所有適用的 skill。不可假設它已收到主 agent 的對話或已載入的 skills。
-3. During execution, follow [Recheck skills during a task](#recheck-skills-during-a-task-任務途中重新檢查-skills).
-   執行途中，遵守上方「任務途中重新檢查 skills」規則。
-4. On completion, report changes, verification results, and unfinished work. The parent agent reviews and integrates the results.
-   完成後，回報變更、驗證結果與未完成事項。主 agent 負責檢查並整合結果。
-
-## After context compaction 上下文壓縮後
-
-After a context compaction or at the start of a new session, read this table again. Then read again each skill that the current task needs. Do not work from a summary of a skill.
-上下文被壓縮後，或新 session 開始時，必須重新讀取本表，並重讀目前任務需要的每個 skill。不可只憑 skill 的摘要工作。
-
-### Compaction limit 壓縮門檻
-
-Keep auto-compaction on. The limit is **75% of the context window by default**. You may lower it to **60%** for a task. Never go above 75% or below 60%. 必須開啟自動壓縮。預設在 context 視窗的 75% 觸發；依任務可調低至 60%；不可高於 75%、不可低於 60%。
-
-| Tool 工具 | Default 預設 (75%) | Lower 調低 (60%) |
-|---|---|---|
-| Claude Code | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=75` in `env` of `~/.claude/settings.json` | Run `/compact` by hand at about 60%, or start with a lower `--autocompact` value |
-| Codex | `model_auto_compact_token_limit = 204000` in `~/.codex/config.toml` (75% of a 272,000-token window) | Add `model_post_turn_compact_threshold_percent = 60` (compacts after a final answer) |
-
-- Do not set `DISABLE_AUTO_COMPACT`, `DISABLE_COMPACT`, or `autoCompactEnabled: false` in Claude Code. 不可在 Claude Code 關閉自動壓縮。Codex cannot turn it off. Codex 無法關閉。
-- Claude Code has no range setting. The env var holds one value, so use it for the 75% default. Claude Code 沒有範圍設定，環境變數只放預設的 75%。
-- For another window size, use 75% of that size. Codex has no percent setting for the token limit, so update the number when the model window changes. 其他視窗大小取該大小的 75%；Codex 的 token 門檻沒有百分比設定，模型視窗改變時要同步調整。
-
-## Order 順序
-
-1. Read row 0 (`ste-zh`). 讀取第 0 列。
-2. Restate the task in STE. 以 STE 重述任務。
-3. List the matching rows. 列出符合的列。
-4. Do the task. 執行任務。
-5. Check the output against each matching skill. 對照每個符合的 skill 檢查輸出。
+- The block above must stay the same as section 5 of `skills/repo-memory/SKILL.md`. 上方區塊必須與 `repo-memory` 第 5 節相同。
 
 ## Add a new skill 新增 skill
 
 Follow these rules for each new skill. 新增 skill 時必須遵守：
 
-1. **Read** this table first. Do not repeat a rule that another skill has. Link to that skill. 先讀本表；不重複其他 skill 已有的規則，改為連結。
-2. **Add a row** to the table in the same change. A skill without a row is not valid. Write a clear "When" that an agent can match. 同一次變更中新增一列；未登記的 skill 無效；「情境」必須清楚到 agent 能比對。
-3. **Put** the skill at `skills/<name>/SKILL.md`. The front matter needs `name` and `description`. The `description` says when to use it, in EN and ZH. 放在 `skills/<name>/SKILL.md`;front matter 需有 `name` 與中英文 `description`（說明何時使用）。
+1. **Read** the routing table in `skills/skill-router/SKILL.md` first. Do not repeat a rule that another skill has. Link to that skill. 先讀路由表；不重複其他 skill 已有的規則，改為連結。
+2. **Add a row** to that table in the same change. A skill without a row is not valid. Write a clear "When" that an agent can match. Add "Signals" if files or code show the need. 同一次變更中新增一列；未登記的 skill 無效；「情境」必須清楚到 agent 能比對；檔案或程式碼能看出需求時，填寫「訊號」。
+3. **Put** the skill at `skills/<name>/SKILL.md`. The front matter needs `name` and `description`. The `description` says when to use it, in EN and ZH. 放在 `skills/<name>/SKILL.md`；front matter 需有 `name` 與中英文 `description`（說明何時使用）。
 4. **Start** the skill body with: "Write in STE. See `ste-zh`." 內文開頭加：「Write in STE. See `ste-zh`.」
 5. **Keep** it short. Apply `skills/minimal-dev/SKILL.md` to the skill itself. 保持精簡，skill 本身也套用 minimal-dev。
-6. **Check** if an existing row, `review-code`, or `SECURITY-CHECKLIST.md` must link to the new skill. Update them. 檢查是否需讓既有列、`review-code`、`SECURITY-CHECKLIST.md` 連結新 skill,並一併更新。
+6. **Check** if an existing row, `review-code`, or `security-checklist` must link to the new skill. Update them. 檢查是否需讓既有列、`review-code`、`security-checklist` 連結新 skill，並一併更新。
 7. **Commit** the skill and the table change together. 新 skill 與表格變更同一個 commit。
 
 ## Upstream skills 上游 skill
@@ -97,15 +38,15 @@ Some skills come from another repo. `upstream.json` lists each one, its source, 
 | `skills/ste-zh` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | notify | MIT, `skills/ste-zh/LICENSE` |
 
 - **sync**: an exact copy of the source. Do not edit its files. The next sync replaces them. Rules 3 and 4 above do not apply. sync：來源的完整複本。不可修改，下次同步會覆蓋。上方第 3、4 條不適用。
-- **external**: not stored in this repo (it is large and has scripts). Install the pinned commit with APM (see README, "外部 skill"). Its folder is `taste-skill` and its front matter name is `design-taste-frontend`. Rules 3 and 4 above do not apply. external：不放在此 repo（體積大且含腳本）。執行 `scripts/install-external.sh` 安裝鎖定的 commit 到 `~/.agents/skills`（可用 `SKILLS_DIR` 覆寫）。第 3、4 條不適用。
+- **external**: not stored in this repo (it is large and has scripts). Install the pinned commit with APM (see README, "外部 skill"). Its folder is `taste-skill` and its front matter name is `design-taste-frontend`. Rules 3 and 4 above do not apply. external：不放在此 repo（體積大且含腳本）。用 APM 安裝鎖定的 commit（見 README「外部 skill」）。上方第 3、4 條不適用。
 - **notify**: an adaptation of the source. A person updates it by hand. notify：來源的改編版，由人工更新。
 - `skills/asd-ste100` is the original of `ste-zh`. It has no routing row. Agents apply `ste-zh` (row 0). `skills/asd-ste100` 是 `ste-zh` 的原文，不列入路由表。代理套用 `ste-zh`（第 0 列）。
 
 The workflow `.github/workflows/upstream-sync.yml` runs each Sunday. When a source changes:
 工作流程 `.github/workflows/upstream-sync.yml` 每週日執行。來源有變更時：
 
-1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`SECURITY-CHECKLIST.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
+1. For a **sync** skill, it opens one PR that copies the new files. Read the upstream diff before you merge (`skills/security-checklist/SKILL.md` section 1). sync：開一個 PR 複製新檔案。合併前必須先讀上游 diff。
 2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。
 3. For an **external** skill, it opens one issue. Read the upstream diff, set `commit` in `upstream.json` to the new commit, then reinstall it with APM. external：開一個 issue。讀上游 diff，將 `commit` 改為新 commit，再用 APM 重新安裝。
 
-To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the table above. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在上表新增一列。
+To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the routing table in `skills/skill-router/SKILL.md`. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在路由表新增一列。

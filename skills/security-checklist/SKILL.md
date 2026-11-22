@@ -1,6 +1,11 @@
+---
+name: security-checklist
+description: "Use before you ship code. Check the attack surface, scans, secrets, detection, and response. 發布程式碼前使用：檢查攻擊面、掃描、密鑰、偵測與回應。"
+---
+
 # SECURITY-CHECKLIST
 
-Write in STE. See `skills/ste-zh/SKILL.md`. Mark each item Done, N/A, or Open. 每項標記 Done / N/A / Open。
+Write in STE. See `ste-zh`. Mark each item Done, N/A, or Open. 每項標記 Done / N/A / Open。
 
 ## 1. Reduce attack surface 縮小攻擊面
 - [ ] Remove unused dependencies. 移除未使用的依賴。
@@ -18,6 +23,7 @@ Write in STE. See `skills/ste-zh/SKILL.md`. Mark each item Done, N/A, or Open. �
 ## 3. Secrets 密鑰
 - [ ] Do not put secrets in code or in the repo. 密鑰不進程式碼與 repo。
 - [ ] Rotate any secret that was exposed. 外洩的密鑰必須輪替。
+- [ ] Do not put secrets or personal data in `.agents/` (memory, project rules, project skills). `.agents/` 內不可有密鑰與個資。
 
 ## 4. Detect 偵測
 - [ ] Log unusual outbound connections, child processes, and file writes. 記錄異常連線、子行程、檔案寫入。
