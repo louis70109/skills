@@ -36,6 +36,8 @@ Some skills come from another repo. `upstream.json` lists each one, its source, 
 | `taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | external | MIT, `LICENSE` in the installed folder |
 | `skills/asd-ste100` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | sync | MIT, `skills/asd-ste100/LICENSE` |
 | `skills/ste-zh` | [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) | notify | MIT, `skills/ste-zh/LICENSE` |
+| `skills/ai-scaffold-release` | [aws-samples/ai-skills](https://github.com/aws-samples/ai-skills) | sync | MIT-0, `skills/ai-scaffold-release/LICENSE` |
+| `skills/ai-adr` | [aws-samples/ai-skills](https://github.com/aws-samples/ai-skills) | sync | MIT-0, `skills/ai-adr/LICENSE` |
 
 - **sync**: an exact copy of the source. Do not edit its files. The next sync replaces them. Rules 3 and 4 above do not apply. sync：來源的完整複本。不可修改，下次同步會覆蓋。上方第 3、4 條不適用。
 - **external**: not stored in this repo (it is large and has scripts). Install the pinned commit with APM (see README, "外部 skill"). Its folder is `taste-skill` and its front matter name is `design-taste-frontend`. Rules 3 and 4 above do not apply. external：不放在此 repo（體積大且含腳本）。用 APM 安裝鎖定的 commit（見 README「外部 skill」）。上方第 3、4 條不適用。
