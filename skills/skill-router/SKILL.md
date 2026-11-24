@@ -31,7 +31,7 @@ Find each row that matches the task. Read and apply **every** matching skill. A 
 | # | When 情境 | Signals 訊號 | Apply 套用 |
 |---|---|---|---|
 | 0 | Every task 每個任務 | — | `ste-zh` |
-| 1 | You design or write code 設計或撰寫程式碼 | Any source file 任何原始碼檔 | `minimal-dev` |
+| 1 | You design or write code, or you are about to install a tool 設計或撰寫程式碼，或準備安裝工具 | Any source file; an install command 任何原始碼檔；安裝指令 | `minimal-dev` |
 | 2 | You add, update, or ship Node/Python dependencies 新增、更新、發布 Node/Python 依賴 | `package.json`, `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `requirements*.txt`, `pyproject.toml`, `poetry.lock`, `uv.lock` | `cve-check` |
 | 3 | You create or change a backend service 建立或修改後端服務 | A server entry point, a `Dockerfile`, a route or handler file 服務進入點、`Dockerfile`、路由或 handler 檔 | `prometheus-guide` |
 | 4 | You create or change a logger or log output 建立或修改 logger／log 輸出 | `logging`, `structlog`, `loguru`, `pino`, `winston`, `bunyan` | `loki-logging` |
