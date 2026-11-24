@@ -7,6 +7,8 @@ description: "Use when the user wants to reverse engineer or decompile a native 
 
 Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
+**需要的工具（`minimal-dev` 2.1）：** Docker。原因：分析需要 Ghidra、JDK 與 Node，bash 做不到。把它們全部放在容器裡，主機只需要 Docker，不必另外安裝其他工具。
+
 REA 是開源（MIT）的逆向工程工具。CLI 指令是 `rea`，npm 套件是 `rea-agents`。深入分析使用 Ghidra。
 這個 skill 把 REA、Ghidra、JDK、Node 裝在同一個 Linux 容器裡，因為 REA 要求 headless provider 與它在同一台主機。
 樣本以唯讀方式掛載。分析時容器不連網。
