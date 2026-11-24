@@ -44,6 +44,7 @@ Find each row that matches the task. Read and apply **every** matching skill. A 
 | 11 | You start or finish a task in a project, or the user asks to set up project memory 在專案中開始或結束任務，或使用者要求建立專案記憶 | `.agents/` exists, or is missing `.agents/` 存在或不存在 | `repo-memory` |
 | 12 | The user asks to set up releases, versioning, or release notes 使用者要求設定發布流程、版本號或 release notes | — (only when the user asks 只在使用者要求時) | `ai-scaffold-release` (upstream skill, see below) |
 | 13 | The user asks to write, accept, decline, amend, supersede, or deprecate an architecture decision record (ADR) 使用者要求撰寫或變更架構決策紀錄（ADR） | — (only when the user asks 只在使用者要求時) | `ai-adr` (upstream skill, see below) |
+| 14 | You reverse engineer or decompile a native binary (.exe, .dll, ELF, Mach-O) 逆向分析或反編譯原生執行檔 | `*.exe`, `*.dll`, `*.so`, `*.dylib` | `rea-docker-analysis` |
 
 - A signal is a hint. A signal in the change or in the project applies the row. A row whose "When" matches applies, also with no signal. 訊號是提示：變更或專案中出現訊號就套用該列；「情境」符合時，沒有訊號也套用。
 - If no row matches, apply row 0 only. If you are not sure, apply the row. 沒有符合的列時只套用第 0 列；不確定時就套用。
