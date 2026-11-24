@@ -84,7 +84,7 @@ Claude Code 的全域 skill 目錄（`~/.claude/skills`）在這台機器是符�
 
 ```
 cd /path/to/your-project
-apm install --target claude louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages louis70109/skills/skills/ai-scaffold-release louis70109/skills/skills/ai-adr louis70109/skills/skills/rea-docker-analysis "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
+apm install --target claude louis70109/skills/skills/ste-zh louis70109/skills/skills/skill-router louis70109/skills/skills/repo-memory louis70109/skills/skills/security-checklist louis70109/skills/skills/minimal-dev louis70109/skills/skills/frontend-dev louis70109/skills/skills/backend-dev louis70109/skills/skills/review-code louis70109/skills/skills/cve-check louis70109/skills/skills/prometheus-guide louis70109/skills/skills/loki-logging louis70109/skills/skills/ux-error-messages louis70109/skills/skills/ai-scaffold-release louis70109/skills/skills/ai-adr louis70109/skills/skills/rea-docker-analysis "Leonxlnx/taste-skill/skills/taste-skill#b900a8075fd7a2449bd6f414a2ae79657e95363c"
 ```
 
 會在專案產生 `apm.yml`、`apm.lock.yaml`、`.claude/skills/`，並在 `.gitignore` 加入 `apm_modules/`。要不要 commit 由你決定。更新時在專案內執行 `apm update --target claude`。
@@ -161,7 +161,7 @@ your-project/
 `taste-skill` 來自 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)。體積大（約 39 MB）且含會啟動瀏覽器的腳本，所以不放進此 repo。固定在審查過的 commit 安裝：
 
 ```
-apm install -g --target agent-skills,codex "Leonxlnx/taste-skill/skills/taste-skill#f578e23218be09ffd5b70debbfdec9fe8286d310"
+apm install -g --target agent-skills,codex "Leonxlnx/taste-skill/skills/taste-skill#b900a8075fd7a2449bd6f414a2ae79657e95363c"
 ```
 
 安裝後資料夾為 `taste-skill`。需要 Node 22 以上與 Chrome、Edge 或 Chromium（上游說明）。它的腳本會啟動瀏覽器並對外抓取資料，使用前請自行檢視。
