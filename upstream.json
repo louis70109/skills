@@ -22,5 +22,21 @@
     "ref": "master",
     "commit": "833810d3866645f579085aa76803541892bde692",
     "mode": "notify"
+  },
+  {
+    "dest": "skills/ai-scaffold-release",
+    "repo": "aws-samples/ai-skills",
+    "path": "skills/release/ai-scaffold-release",
+    "ref": "main",
+    "commit": "5e2c886d92cb0ca853d9e433695fac1f367dd002",
+    "mode": "sync"
+  },
+  {
+    "dest": "skills/ai-adr",
+    "repo": "aws-samples/ai-skills",
+    "path": "skills/adr/ai-adr",
+    "ref": "main",
+    "commit": "5e2c886d92cb0ca853d9e433695fac1f367dd002",
+    "mode": "sync"
   }
 ]
