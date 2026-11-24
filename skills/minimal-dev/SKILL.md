@@ -35,13 +35,14 @@ Write in STE. See `ste-zh`. 以 STE 撰寫，見 `ste-zh`。
 
 ### 2.1 Tools 工具
 
+This section applies to basic code work: writing code and scripts, and running builds, tests, and checks. A specialized skill that names its own tools keeps them. 本節適用於基本程式撰寫：寫程式與腳本、執行建置、測試與檢查。已指定自身工具的專門 skill 維持原樣。
+
 Use bash and the tools that are already installed. Do not install a tool without a need. 優先用 bash 與已安裝的工具，沒有必要不安裝工具。
 
 1. First use bash with the tools that are already on the machine: `git`, `grep`, `sed`, `awk`, `find`, `curl`, and the package manager of the project. On Windows, use Git Bash, which comes with Git. 先用 bash 與機器上已有的工具；Windows 使用 Git 附帶的 Git Bash。
 2. If a task needs a helper script, write it in bash. Use another language only if bash cannot do the job safely. Write the reason at the top of the script. 需要輔助腳本時用 bash；bash 無法安全完成時才用其他語言，並在腳本開頭寫明原因。
 3. Install a new tool only if no installed tool can do the job. Ask the user first. Tell the user what the tool does, why the installed tools cannot do it, and where it comes from. 只有已安裝的工具都做不到時才安裝；先問使用者，說明用途、原因與來源。
 4. Run a heavy tool, such as a SAST scanner or an SBOM generator, in CI. Do not install it on the local machine for one task. 重型工具在 CI 執行，不為單一任務裝在本機。
-5. A skill must not need a tool beyond those in item 1. If a skill must need one, list the tool and the reason at the top of the skill. skill 不可需要第 1 項以外的工具；必須需要時，在 skill 開頭列出工具與原因。
 
 ## 3. Always build 必須做
 

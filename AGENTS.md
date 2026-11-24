@@ -22,7 +22,7 @@ Follow these rules for each new skill. 新增 skill 時必須遵守：
 2. **Add a row** to that table in the same change. A skill without a row is not valid. Write a clear "When" that an agent can match. Add "Signals" if files or code show the need. 同一次變更中新增一列；未登記的 skill 無效；「情境」必須清楚到 agent 能比對；檔案或程式碼能看出需求時，填寫「訊號」。
 3. **Put** the skill at `skills/<name>/SKILL.md`. The front matter needs `name` and `description`. The `description` says when to use it, in EN and ZH. 放在 `skills/<name>/SKILL.md`；front matter 需有 `name` 與中英文 `description`（說明何時使用）。
 4. **Start** the skill body with: "Write in STE. See `ste-zh`." 內文開頭加：「Write in STE. See `ste-zh`.」
-5. **Keep** it short. Apply `skills/minimal-dev/SKILL.md` to the skill itself. Write its scripts in bash, and need no tool beyond `minimal-dev` section 2.1. 保持精簡，skill 本身也套用 minimal-dev；腳本用 bash，不需要 2.1 節以外的工具。
+5. **Keep** it short. Apply `skills/minimal-dev/SKILL.md` to the skill itself. 保持精簡，skill 本身也套用 minimal-dev。
 6. **Check** if an existing row, `review-code`, or `security-checklist` must link to the new skill. Update them. 檢查是否需讓既有列、`review-code`、`security-checklist` 連結新 skill，並一併更新。
 7. **Commit** the skill and the table change together. 新 skill 與表格變更同一個 commit。
 
@@ -51,4 +51,4 @@ The workflow `.github/workflows/upstream-sync.yml` runs each Sunday. When a sour
 2. For a **notify** skill, it opens one issue with the upstream diff. Update the skill. Then set its `commit` in `upstream.json` to the new commit. The issue stays open until you do this. notify：開一個 issue，附上游 diff。更新 skill 後，將 `upstream.json` 中的 `commit` 改為新 commit。改之前 issue 會持續存在。
 3. For an **external** skill, it opens one issue. Read the upstream diff, set `commit` in `upstream.json` to the new commit, then reinstall it with APM. external：開一個 issue。讀上游 diff，將 `commit` 改為新 commit，再用 APM 重新安裝。
 
-To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the routing table in `skills/skill-router/SKILL.md`. Before you add it, list the tools it needs. If it needs a tool beyond `minimal-dev` section 2.1, ask the user first and record the tool in the README. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在路由表新增一列。新增前列出它需要的工具；需要 2.1 節以外的工具時，先問使用者，並記錄在 README。
+To add an upstream skill: copy the source and its `LICENSE`, add an entry to `upstream.json`, and add a row to the routing table in `skills/skill-router/SKILL.md`. 新增上游 skill：複製來源與 `LICENSE`，在 `upstream.json` 新增一筆，並在路由表新增一列。
