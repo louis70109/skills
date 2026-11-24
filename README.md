@@ -16,11 +16,11 @@
 | `ste-zh` | 每個任務開始前使用。用台灣繁體中文或清楚的技術英文，簡短、不含糊。 |
 | `skill-router` | 每個任務開始前使用。路由表：依情境與訊號決定要套用哪些 skill，並讀取專案層。 |
 | `repo-memory` | 在專案中開始或結束任務時使用。建立與更新 `.agents/` 的專案記憶與專案 skills。 |
-| `minimal-dev` | 設計或寫程式前使用。只做最小可行的變更；含測試原則（不強制 TDD）與「Don't make me think too much」。 |
+| `minimal-dev` | 設計或寫程式前使用。只做最小可行的變更；含測試原則（不強制 TDD）、「Don't make me think too much」與工具規則（先用 bash 與已安裝的工具，不為單一任務安裝工具）。 |
 | `frontend-dev` | 前端開發與審查。優先順序：UX、畫面流暢、一致性、效率。 |
 | `backend-dev` | 後端開發與審查。優先順序：彈性、擴充性、效率；含 DDD 建模。 |
 | `review-code` | 審查變更或自我檢查。涵蓋可用性、彈性、維護性、可觀測性、CVE。 |
-| `cve-check` | 新增、更新、發布依賴前，掃描 lockfile 的已知漏洞。 |
+| `cve-check` | 新增、更新、發布依賴前，掃描 lockfile 的已知漏洞。Python lockfile 用附帶的 bash 腳本（只需要 `curl`）查詢 OSV。 |
 | `prometheus-guide` | 建立或修改後端服務時，設定 Prometheus metrics。 |
 | `loki-logging` | 建立或修改 logger 時，讓 log 符合 Loki 設計。 |
 | `ux-error-messages` | 使用者看得到的錯誤、警告訊息的寫法。 |

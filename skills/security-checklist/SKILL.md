@@ -17,8 +17,10 @@ Write in STE. See `ste-zh`. Mark each item Done, N/A, or Open. 每項標記 Done
 
 ## 2. Scan 掃描
 - [ ] Run `skills/cve-check/SKILL.md`. 執行 cve-check。
-- [ ] Run SAST: Semgrep or CodeQL (Python: Bandit). 執行靜態分析。
-- [ ] Run a secret scan: gitleaks. 執行密鑰掃描。
+- [ ] Run a secret scan of the tracked files with bash first. 先用 bash 掃描追蹤中的檔案是否有密鑰：
+  `git grep -nIE -e '-----BEGIN [A-Z ]*PRIVATE KEY-----' -e 'AKIA[0-9A-Z]{16}' -e 'gh[pousr]_[A-Za-z0-9]{36}' -e 'xox[abprs]-[A-Za-z0-9-]{10,}'`
+  This finds common formats only. Run gitleaks in CI to scan the history. 只找常見格式；在 CI 用 gitleaks 掃描歷史。
+- [ ] Run SAST (Semgrep or CodeQL; Python: Bandit) in CI. Do not install it locally for one task (`minimal-dev` section 2.1). 在 CI 執行靜態分析，不為單一任務裝在本機。
 
 ## 3. Secrets 密鑰
 - [ ] Do not put secrets in code or in the repo. 密鑰不進程式碼與 repo。
@@ -30,8 +32,8 @@ Write in STE. See `ste-zh`. Mark each item Done, N/A, or Open. 每項標記 Done
 - [ ] A person must read the alerts. 告警必須有人處理。
 
 ## 5. Respond 回應
-- [ ] Keep an SBOM (for example `syft`). 維護 SBOM。
-- [ ] Run `osv-scanner` each day in CI. CI 每日執行 osv-scanner。
+- [ ] Keep an SBOM. The lockfile is the first record. Make a full SBOM (for example with `syft`) in CI. 維護 SBOM；lockfile 是第一份紀錄，完整 SBOM 在 CI 產生。
+- [ ] Run an OSV check each day in CI: `osv-scanner`, or `skills/cve-check/scripts/osv-check.sh` for Python. CI 每日執行 OSV 檢查。
 - [ ] Keep a rollback procedure and a secret rotation procedure. 備妥回滾與密鑰輪替流程。
 
 ## Limit 限制
